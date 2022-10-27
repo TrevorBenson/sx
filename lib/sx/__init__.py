@@ -283,7 +283,7 @@ class SXConfigurationFiles:
         if os.environ['SX_CONFIGURATION_DIR'] is not None:
             CONFIGURATION_DIR = os.environ['SX_CONFIGURATION_DIR']
     except KeyError:
-        CONFIGURATION_DIR = os.path.join(os.environ['HOME'],".sx")
+        CONFIGURATION_DIR = '/etc/scality/sx'
 
     def generateDefaultConfigurationDirectories(self):
         """
