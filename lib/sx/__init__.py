@@ -4,7 +4,7 @@ This contains Global variables for sx.
 
 @author    :  Shane Bradley
 @contact   :  sbradley@redhat.com
-@version   :  2.17
+@version   :  2.17.scality
 @copyright :  GPLv2
 """
 import sys
@@ -279,7 +279,7 @@ class SXConfigurationFiles:
     if os.environ['SX_CONFIGURATION_DIR'] is not None:
         CONFIGURATION_DIR = os.environ['SX_CONFIGURATION_DIR']
     else:
-        CONFIGURATION_DIR = os.path.join(os.environ['HOME'],".sx")
+        CONFIGURATION_DIR = '/etc/scality/sx'
 
     def generateDefaultConfigurationDirectories(self):
         """
