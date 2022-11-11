@@ -176,7 +176,7 @@ class StreamHandlerColorized(logging.StreamHandler):
         @param color: The color that text should be colorized to.
         @type color: String
         """
-        if (not StreamHandlerColorized.CONSOLE_COLORS.has_key(color)):
+        if (not color in StreamHandlerColorized.CONSOLE_COLORS):
             return text
         fgColor = StreamHandlerColorized.CONSOLE_COLORS.get(color)
         opencol = "\033["

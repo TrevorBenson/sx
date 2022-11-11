@@ -312,7 +312,7 @@ class SXConfigurationFiles:
                      os.path.join(os.path.join(SXConfigurationFiles.CONFIGURATION_DIR, SXConfigurationFiles.PLUGIN_USER_IMPORT), "__init__.py")) :
             if (not os.access(path, os.F_OK)) :
                 try:
-                    fout = open(path, "wb")
+                    fout = open(path, "w")
                     fout.write("# created by sxconsole: %s\n" %(timestamp))
                     fout.close()
                 except IOError:

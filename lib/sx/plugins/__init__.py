@@ -13,6 +13,7 @@ import os
 import os.path
 import logging
 import json
+import six 
 
 import sx
 from sx.logwriter import LogWriter
@@ -42,17 +43,21 @@ class PluginsHelper:
                 enabledMessage = "There was no plugins enabled."
             if (not len(disabledMessage) > 0):
                 disabledMessage = "There was no plugins disabled."
-            print  "\n%s\n%s" %(enabledMessage, disabledMessage)
-
-            print "The list of available options for plugins:"
+            six.print_("\n{}\n{}".format(enabledMessage, disabledMessage))
+            # print  "\n%s\n%s" %(enabledMessage, disabledMessage)
+            six.print_("The list of available options for plugins:")
+            # print "The list of available options for plugins:"
             for plugin in loadedPlugins:
                 optionNames = plugin.getOptions()
                 if (len(optionNames) > 0):
                     for optionName in optionNames :
                         optionDescription = plugin.getOptionDescription(optionName)
-                        print "%s.%s: %s" %(ConsoleUtil.colorText(str(plugin.getName()),"red"),
+                        six.print_("{}.{}: {}".format(ConsoleUtil.colorText(str(plugin.getName()),"red"),
                                             ConsoleUtil.colorText(optionName,"red"),
-                                            optionDescription)
+                                            optionDescription))
+                        # print "%s.%s: %s" %(ConsoleUtil.colorText(str(plugin.getName()),"red"),
+                        #                     ConsoleUtil.colorText(optionName,"red"),
+                        #                     optionDescription)
 
     def getEnabledPluginsList(self, pathToPluginReportDir, enableAllPlugins, disableAllPlugins,
                               listOfEnabledPlugins, listOfDisabledPlugins, pluginsOptionsMap,
@@ -99,7 +104,7 @@ class PluginsHelper:
                 # ###############################################################
                 # Map the options on the enabled plugins
                 pluginName = plugin.getName().lower()
-                if (pluginsOptionsMap.has_key(pluginName)):
+                if pluginName in pluginsOptionsMap:
                     # Get a dictionary from a dictionary key whose
                     # value is a dictionary.
                     optionsMap = pluginsOptionsMap.get(pluginName)
@@ -138,7 +143,7 @@ class PluginsHelper:
             listOfFiles = plugin.getFileList()
             if (len(listOfFiles) > 0) :
                 for filename in listOfFiles:
-                    if (not mapOfPluginReportPaths.has_key(plugin.getName())):
+                    if plugin.getName() not in mapOfPluginReportPaths:
                         mapOfPluginReportPaths[plugin.getName()] = [filename]
                     else:
                         mapOfPluginReportPaths[plugin.getName()].append(filename)
@@ -310,7 +315,7 @@ class PluginBase:
         plugin option.  None is returned if optionName does not exist.
         @rtype: String
         """
-        if self.__optionDescriptions.has_key(optionName):
+        if optionName in self.__optionDescriptions:
             return self.__optionDescriptions[optionName]
         return None
 
@@ -322,7 +327,7 @@ class PluginBase:
         option. None is returned if optionName does not exist.
         @rtype:String
         """
-        if self.__optionValues.has_key(optionName):
+        if optionName in self.__optionValues:
             return self.__optionValues[optionName]
         return None
 
@@ -346,7 +351,7 @@ class PluginBase:
         be set.
         @type value: String
         """
-        if (self.__optionValues.has_key(optionName)) :
+        if optionName in self.__optionValues:
             self.__optionValues[optionName] = value
             return True
         return False
@@ -491,11 +496,12 @@ class PluginBase:
             fout = open(pathToFilename, filemode)
             fout.write(data + "\n")
             fout.close()
-        except UnicodeEncodeError, e:
+        except UnicodeEncodeError(e):
             # Python 2.6 has "as", 2.5 does not  except UnicodeEncodeError as e:
             message = "There was a unicode encode error on file: %s." %(filename)
             logging.getLogger(sx.MAIN_LOGGER_NAME).error(message)
-            print e
+            six.print_(e)
+            # print e
         except IOError:
             message = "There was an error writing the file: %s." %(filename)
             logging.getLogger(sx.MAIN_LOGGER_NAME).error(message)
@@ -611,11 +617,12 @@ class PluginBase:
             fout = open(pathToFilename, filemode)
             json.dump(data, fout)
             fout.close()
-        except UnicodeEncodeError, e:
+        except UnicodeEncodeError(e):
             # Python 2.6 has "as", 2.5 does not  except UnicodeEncodeError as e:
             message = "There was a unicode encode error on file: %s." %(filename)
             logging.getLogger(sx.MAIN_LOGGER_NAME).error(message)
-            print e
+            six.print_(e)
+            # print e
         except IOError:
             message = "There was an error writing the file: %s." %(filename)
             logging.getLogger(sx.MAIN_LOGGER_NAME).error(message)

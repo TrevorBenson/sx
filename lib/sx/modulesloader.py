@@ -16,6 +16,7 @@ import os.path
 import logging
 import sys
 import re
+import six
 
 import sx
 from sx.logwriter import LogWriter
@@ -61,10 +62,11 @@ class ModulesLoader :
             return getattr(module, moduleClassName)
         except ValueError:
             pass
-        except ImportError,e:
+        except ImportError as e:
             message ="Import module error occurred on importing the Class \"%s\" from import: %s" %(moduleClassName, pathToModuleFile)
             logging.getLogger(sx.MAIN_LOGGER_NAME).error(message)
-            print e
+            six.print_(e)
+            # print e
         return None
 
     def getClasses(self, pathToModuleBaseDir, moduleImportBase):
@@ -225,9 +227,10 @@ class ReportsLoader(ModulesLoader) :
             #logging.getLogger(sx.MAIN_LOGGER_NAME).debug(message)
             rem = re.compile(regex)
             for line in listOfFilenames:
-                mo = rem.match(line)
+                # line = bytes(line, 'utf-8')
+                mo = rem.match(str(line))
                 if mo:
-                    if (detectionFileMap.has_key(mo.lastgroup)):
+                    if (mo.lastgroup in detectionFileMap):
                         reportClass = detectionFileMap.get(mo.lastgroup)
                         report = reportClass()
                         return report

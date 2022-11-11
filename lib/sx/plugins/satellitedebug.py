@@ -10,6 +10,7 @@ validation tests.
 """
 import logging
 import os
+import six
 
 import sx
 import sx.plugins
@@ -104,7 +105,8 @@ class RHNSatelliteDebugReport:
         @param pathToRpmManifest: The path to the rpm manifest file.
         @type pathToRpmManifest: String
         """
-        print pathToRpmManifest
+        # print pathToRpmManifest
+        six.print_(pathToRpmManifest)
         try:
             fin = open(pathToRpmManifest, "r")
             lines = fin.readlines()

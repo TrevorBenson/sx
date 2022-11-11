@@ -123,7 +123,7 @@ class ConfigurationFileParser:
         @param optionName: An option in the configuration file.
         @type optionName: String
         """
-        if ((self.__configOptionsMap.has_key(optionName)) and (self.isValid())):
+        if ((optionName in self.__configOptionsMap) and (self.isValid())):
             return self.__configOptionsMap[optionName]
         return ""
 
@@ -196,7 +196,7 @@ class ConsoleUtil:
                     "purple":"35", "cyan":"36", "lgray":"37", "gray":"1;30", "lred":"1;31",
                     "lgreen":"1;32", "yellow":"1;33", "lblue":"1;34", "pink":"1;35",
                     "lcyan":"1;36", "white":"1;37" }
-        if (not colors.has_key(color)) :
+        if color not in colors:
             return  text
         opencol = "\033["
         closecol = "m"

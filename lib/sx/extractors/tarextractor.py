@@ -25,7 +25,7 @@ class Tarextractor(Extractor) :
         try :
             tarTask = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             (stdout, stderr) = tarTask.communicate()
-            if ((stdout.find("GNU") >= 0) or (tarTask.returncode  == 0)):
+            if ((stdout.find(b"GNU") >= 0) or (tarTask.returncode  == 0)):
                 return True
             else:
                 return False
@@ -80,7 +80,7 @@ class Tarextractor(Extractor) :
         fileList =  self.list()
         fullPathToFile = ""
         for item in fileList:
-            splitItem = item.split("/", 1)
+            splitItem = item.split(b"/", 1)
             # Strip any leading slashes because the result will not
             # contain one.
             if (len(splitItem) == 1):
