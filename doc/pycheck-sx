@@ -19,6 +19,7 @@ import os
 import os.path
 import subprocess
 import mimetypes
+import six
 
 PATH_TO_PYCHECKER = "/bin/pychecker"
 PATH_TO_PYTHON_SOURCE_CODE = os.path.join(os.environ['HOME'],"git/sx")
@@ -26,7 +27,7 @@ PATH_TO_PYTHON_SOURCE_CODE = os.path.join(os.environ['HOME'],"git/sx")
 def __executeBinary(pathToPythonFiles) :
     if (not os.path.exists(PATH_TO_PYCHECKER)):
         message = "The command is not installed in its default location: %s. The scan will be aborted." %(PATH_TO_PYCHECKER)
-        print message
+        six.print_(message)
         return ""
     command = [PATH_TO_PYCHECKER, pathToPythonFiles]
     task = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -39,14 +40,14 @@ def __executeBinary(pathToPythonFiles) :
 if __name__ == "__main__":
     if (not os.path.exists(PATH_TO_PYCHECKER)):
         message = "The command is not installed in its default location: %s. The application will exit since binary was not found." %(PATH_TO_PYCHECKER)
-        print message
+        six.print_(message)
         sys.exit(1)
 
     pythonFilenamesMap = {}
     # Manually add in single files. Full path to file or glob(/path/*.py).
     pythonFilenamesMap["/home/sbradley-devel/git/sx/sxconsole"] = ""
     try:
-        print "Building the list of directories that will be scanned by pychecker.py"
+        six.print_("Building the list of directories that will be scanned by pychecker.py")
         for root, dirs, files in os.walk(PATH_TO_PYTHON_SOURCE_CODE):
             srcDirStripped = root.strip(PATH_TO_PYTHON_SOURCE_CODE)
             if (not srcDirStripped.startswith(".")):
@@ -59,13 +60,13 @@ if __name__ == "__main__":
                         (not filename == "setup.py")):
                         pythonFilenamesMap[fullPathToFilename] = ""
         if (len(pythonFilenamesMap.keys()) > 0):
-            print "Scanning all the sub-directories in the path \"%s\"." %(PATH_TO_PYTHON_SOURCE_CODE)
+            six.print_("Scanning all the sub-directories in the path \"%s\"." %(PATH_TO_PYTHON_SOURCE_CODE))
             keys = pythonFilenamesMap.keys()
             keys.sort()
             for key in keys:
                 pythonFilenamesMap[key] = __executeBinary(key)
 
-            print "\nResults of the scan of the directories within \"%s\" with the tool \"%s\"." %(PATH_TO_PYTHON_SOURCE_CODE, PATH_TO_PYCHECKER)
+            six.print_("\nResults of the scan of the directories within \"%s\" with the tool \"%s\"." %(PATH_TO_PYTHON_SOURCE_CODE, PATH_TO_PYCHECKER))
             warningsCount = 0
             for key in keys:
                 value = pythonFilenamesMap[key]
@@ -78,17 +79,17 @@ if __name__ == "__main__":
                         (not line.endswith("Members (CRITICAL_LEVEL, DEBUG_LEVEL, DISABLE_LOGGING, ERROR_LEVEL, INFO_LEVEL, WARNING_LEVEL) not used in class (LogWriter)"))):
                         lines.append(lineStripped)
                 if (len(lines) > 0):
-                    print "%s:\n\t The following warnings were detected." %(key)
+                    six.print_("%s:\n\t The following warnings were detected." %(key))
                     for line in lines:
                         if (len(line) > 0):
-                            print "\t %s" %(line)
+                            six.print_("\t %s" %(line))
                             warningsCount += 1
                             # else:
                             #   print "%s:\n\t There was no warnings detected.\n" %(key)
                     print
-            print "There was %d warning(s) found." %(warningsCount)
+            six.print_("There was %d warning(s) found." %(warningsCount))
     except KeyboardInterrupt:
-        print ""
+        six.print_("")
         message =  "This script will exit since control-c was executed by end user."
         logging.getLogger(sx.MAIN_LOGGER_NAME).error(message)
         sys.exit(2)
