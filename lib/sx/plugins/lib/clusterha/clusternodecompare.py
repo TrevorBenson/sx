@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This class will evalatuate a cluster and create a report that will
 link in known issues with links to resolution.

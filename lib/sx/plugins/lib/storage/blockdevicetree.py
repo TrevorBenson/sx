@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This is port of the perl script that dwysocha wrote:
 http://seg.rdu.redhat.com/~dwysocha/seg-tools/seg-dmsetup-ls-tree

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This script will create a class that will be used to get informaton about GFS,
 GFS2, and filesystem resources in the cluster.conf.

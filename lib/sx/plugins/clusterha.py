@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This class will run various validation tests and gather information
 about Report Objects that are cluster nodes.

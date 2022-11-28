@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This plugin will analyze and summarize a collection of sosreports that are using gluster.
 

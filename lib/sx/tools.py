@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This class has a collection of various tools that are used with
 sosreports/sysreports.

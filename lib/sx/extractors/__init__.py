@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 Performs operations on a tarball that is archived with tar and
 compressed bzip2, gunzip, or xv. The GNU tar command is used to do all

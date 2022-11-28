@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This is a plugin for rhnsatellite debug that will perform various
 validation tests.

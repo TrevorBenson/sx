@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This class does various operations on a /etc/cluster/cluster.conf file
 that is in xml format.

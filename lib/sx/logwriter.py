@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 The Logger Class will log messages to console or to a file. If logged
 to console then text will colorize the message type.

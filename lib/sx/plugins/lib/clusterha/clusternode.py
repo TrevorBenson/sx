@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This classes are for cluster nodes in the sosreport/sysreport. They
 represnet configs files paths and other items that are needed for all

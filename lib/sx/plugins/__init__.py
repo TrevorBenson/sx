@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This class will be used to pull in all the plugins and will be
 inherited by all the plugins.

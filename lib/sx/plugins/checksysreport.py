@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 A class that can run checksysreport against a report and then write
 the checksysreport data to a file.

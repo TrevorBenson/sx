@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This is a collection of classes that contain data for files from a
 sosreport in the directory:

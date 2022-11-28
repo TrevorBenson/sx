@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This class contains object for data that is contains in the files
 sos_commands/cluster in a sosreport.

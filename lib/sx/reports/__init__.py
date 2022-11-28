@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This class is a container for different kind of reports. This is the
 base class that all report types should inherit.

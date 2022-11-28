@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 A class that can run analyze the storage aspect of a sosreport.
 

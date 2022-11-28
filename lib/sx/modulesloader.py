@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This file contains 4 classes. ModulesLoader is default loader for all
 modules: reports, plugins, and extractors.
