@@ -276,9 +276,9 @@ class SXConfigurationFiles:
     """
     REPORT_USER_IMPORT="sxreports"
     PLUGIN_USER_IMPORT="sxplugins"
-    if os.environ['SX_CONFIGURATION_DIR'] is not None:
+    try:
         CONFIGURATION_DIR = os.environ['SX_CONFIGURATION_DIR']
-    else:
+    except KeyError:
         CONFIGURATION_DIR = '/etc/scality/sx'
 
     def generateDefaultConfigurationDirectories(self):
