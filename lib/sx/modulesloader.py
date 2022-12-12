@@ -16,7 +16,6 @@ import os.path
 import logging
 import sys
 import re
-import six
 
 import sx
 from sx.logwriter import LogWriter
@@ -65,8 +64,7 @@ class ModulesLoader :
         except ImportError as e:
             message ="Import module error occurred on importing the Class \"%s\" from import: %s" %(moduleClassName, pathToModuleFile)
             logging.getLogger(sx.MAIN_LOGGER_NAME).error(message)
-            six.print_(e)
-            # print e
+            print(e)
         return None
 
     def getClasses(self, pathToModuleBaseDir, moduleImportBase):

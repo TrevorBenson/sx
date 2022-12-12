@@ -17,7 +17,6 @@ import os.path
 import shutil
 from optparse import OptionParser, Option
 import logging
-import six
 
 import sx
 from sx.logwriter import LogWriter
@@ -641,11 +640,9 @@ class OptionParserExtended(OptionParser):
         examplesMessage += "To run the cluster and the checksysreport plugin against a previously extracted report that used the modified layout scheme:\n"
         examplesMessage += "$ %s -p ~/sxarchive/ereports/15555553/2.17-01-26_160247 -e cluster,checksysreport -M\n\n" %(self.__commandName)
         OptionParser.print_help(self)
-        six.print_(layoutDescription)
-        # print layoutDescription
-        six.print_(examplesMessage)
-        # print examplesMessage
-
+        print(layoutDescription)
+        print(examplesMessage)
+        
 class ExtendOption (Option):
         """
         Allow to specify comma delimited list of entries for arrays
@@ -737,49 +734,39 @@ def __printToConsole(pathToCompressedReports, pathToExtractedReports, mapOfPlugi
                     # message_part_1 = ConsoleUtil.colorText("{} plugin File {}:".format(key, index), "lgreen")
                     # message_part_2 = "{}".format(pathToPluginReport.replace(homeDirectory, "~"))
                     # message = "{} {}".format(message_part_1, message_part_2)
-                    # six.print_(message)
-                    six.print_("%s %s" %(ConsoleUtil.colorText("%s plugin File %d: " %(key, index),"lgreen"), pathToPluginReport.replace(homeDirectory, "~")))
-                    # print "%s %s" %(ConsoleUtil.colorText("%s plugin File %d: " %(key, index),"lgreen"), pathToPluginReport.replace(homeDirectory, "~"))
+                    # print(message)
+                    print("%s %s" %(ConsoleUtil.colorText("%s plugin File %d: " %(key, index),"lgreen"), pathToPluginReport.replace(homeDirectory, "~")))
                 else:
                     if(headerPrinted):
-                        six.print_("\n%s %s" %(ConsoleUtil.colorText("%s plugin File %d: " %(key, index),"lgreen"), pathToPluginReport.replace(homeDirectory, "~")))
-                        # print "\n%s %s" %(ConsoleUtil.colorText("%s plugin File %d: " %(key, index),"lgreen"), pathToPluginReport.replace(homeDirectory, "~"))
+                        print("\n%s %s" %(ConsoleUtil.colorText("%s plugin File %d: " %(key, index),"lgreen"), pathToPluginReport.replace(homeDirectory, "~")))
                     else:
-                        six.print_("\n%s" %(ConsoleUtil.colorText("List of Files Created by the plugins:", "cyan")))
-                        # print "\n%s" %(ConsoleUtil.colorText("List of Files Created by the Plugins: ","lcyan"))
-                        six.print_("%s %s" %(ConsoleUtil.colorText("%s plugin File %d: " %(key, index),"lgreen"), pathToPluginReport.replace(homeDirectory, "~")))
-                        # print "%s %s" %(ConsoleUtil.colorText("%s plugin File %d: " %(key, index),"lgreen"), pathToPluginReport.replace(homeDirectory, "~"))
+                        print("\n%s" %(ConsoleUtil.colorText("List of Files Created by the plugins:", "cyan")))
+                        print("%s %s" %(ConsoleUtil.colorText("%s plugin File %d: " %(key, index),"lgreen"), pathToPluginReport.replace(homeDirectory, "~")))
                         headerPrinted = True
                 index += 1;
 
     # Print paths to all files that are not reports.
     if (len(listOfNonReportPaths) > 0) :
         wasInformationPrintedToConsole = True
-        six.print_("\n%s" %(ConsoleUtil.colorText("Details for Non-Report Files: ", "lcyan")))
-        # print "\n%s" %(ConsoleUtil.colorText("Details for Non-Report Files: ","lcyan"))
+        print("\n%s" %(ConsoleUtil.colorText("Details for Non-Report Files: ", "lcyan")))
         index = 1;
         for pathToNonReportFile in listOfNonReportPaths:
             if (index == 1):
                 (dirPath, filename) = os.path.split(pathToNonReportFile)
-                six.print_("%s %s" %(ConsoleUtil.colorText("Non-Report Files Directory:", "lgreen"), dirPath.replace(homeDirectory, "~")))
-                # print "%s %s" %(ConsoleUtil.colorText("Non-Report Files Directory:", "lgreen"), dirPath.replace(homeDirectory, "~"))
+                print("%s %s" %(ConsoleUtil.colorText("Non-Report Files Directory:", "lgreen"), dirPath.replace(homeDirectory, "~")))
             spacingCount = 7
             if (index >= 10):
                 spacingCount = 6
-            six.print_("%s %s %s" %(ConsoleUtil.colorText("Non-Report File %d: " %(index), "lgreen"), (" " * spacingCount), pathToNonReportFile.replace(homeDirectory, "~")))
-            # print "%s %s %s" %(ConsoleUtil.colorText("Non-Report File %d: " %(index),"lgreen"), (" " * spacingCount), pathToNonReportFile.replace(homeDirectory, "~"))
+            print("%s %s %s" %(ConsoleUtil.colorText("Non-Report File %d: " %(index), "lgreen"), (" " * spacingCount), pathToNonReportFile.replace(homeDirectory, "~")))
             index += 1;
 
     # Print the report archive location
     if ((os.path.exists(pathToCompressedReports)) or
         (os.path.exists(pathToExtractedReports))):
         wasInformationPrintedToConsole = True
-        six.print_("\n%s" %(ConsoleUtil.colorText("Details for Report Files: ", "lcyan")))
-        # print "\n%s" %(ConsoleUtil.colorText("Details of Report Extraction: ","lcyan"))
-        six.print_("%s%s" %(ConsoleUtil.colorText("Compressed Reports Directory: ","lgreen"), pathToCompressedReports.replace(homeDirectory, "~")))
-        # print "%s%s" %(ConsoleUtil.colorText("Compressed Reports Directory: ","lgreen"), pathToCompressedReports.replace(homeDirectory, "~"))
-        six.print_("%s%s" %(ConsoleUtil.colorText("Extracted Reports Directory:  ","lgreen"), pathToExtractedReports.replace(homeDirectory, "~")))
-        # print "%s%s" %(ConsoleUtil.colorText("Extracted Reports Directory:  ","lgreen"), pathToExtractedReports.replace(homeDirectory, "~"))
+        print("\n%s" %(ConsoleUtil.colorText("Details for Report Files: ", "lcyan")))
+        print("%s%s" %(ConsoleUtil.colorText("Compressed Reports Directory: ","lgreen"), pathToCompressedReports.replace(homeDirectory, "~")))
+        print("%s%s" %(ConsoleUtil.colorText("Extracted Reports Directory:  ","lgreen"), pathToExtractedReports.replace(homeDirectory, "~")))
 
     if (not wasInformationPrintedToConsole):
         message = "There was zero reports extracted and zero non-report files added."
@@ -823,8 +810,7 @@ if __name__ == "__main__":
         if (cmdLineOpts.listModules):
             versionMessage = "%s %s\n" %(os.path.basename(sys.argv[0]), VERSION_NUMBER)
             versionMessage += "This program was written by Shane Bradley(sbradley@redhat.com): https://fedorahosted.org/sx \n"
-            six.print_(versionMessage)
-            # print versionMessage
+            print(versionMessage)
             reportsHelper = ReportsHelper()
             reportsHelper.printReportsList(includeUserReports=(not cmdLineOpts.disableUserDefinedModules))
             pluginsHelper = PluginsHelper()
@@ -902,8 +888,7 @@ if __name__ == "__main__":
                         if plugin.isEnabled() :
                             pluginDescription = "%s: %s" %(plugin.getName(), plugin.getDescription())
                             if (not len(pluginDescription) > 100):
-                                six.print_("\t  %s" %(pluginDescription))
-                                # print "\t  %s" %(pluginDescription)
+                                print("\t  %s" %(pluginDescription))
                             else:
                                 import textwrap
                                 subsequentIndent = " " * len(plugin.getName())
@@ -913,8 +898,7 @@ if __name__ == "__main__":
                                                                 initial_indent="\t  ",
                                                                 subsequent_indent="\t  %s"%(subsequentIndent))
                                 for textWrapped in textWrappedList:
-                                    six.print_(textWrapped)
-                                    # print textWrapped
+                                    print(textWrapped)
                       """
                     # Generate map of all plugins reports that were created after they run.
                     mapOfPluginReportPaths = pluginsHelper.generatePluginReports(listOfReportsExtracted, listOfEnabledPlugins)
@@ -1001,8 +985,7 @@ if __name__ == "__main__":
             logging.getLogger(sx.MAIN_LOGGER_NAME).error(message)
             message = "The data that was going to be written to the file is below: \n%s" %(errorString)
             logging.getLogger(sx.MAIN_LOGGER_NAME).info(message)
-        six.print_(errorString)
-        # print errorString
+        print(errorString)
         sys.exit(2)
 
     # #######################################################################

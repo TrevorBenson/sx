@@ -10,7 +10,6 @@ sos_commands/rpm
 @copyright :  GPLv2
 """
 import re
-import six
 
 class RPMSParser:
     def parseInstalledRPMSData(installedRPMSData):
@@ -50,8 +49,8 @@ class RPMSParser:
                 parsedList.append(installedRPMS)
                 """
             else:
-                six.print_(packageFullName)
-        six.print_("\nAre the counts the same? \n\tinstalledRPMSData: %d\n\tparsedList:        %d" %(len(installedRPMSData), len(parsedList)))
+                print(packageFullName)
+        print("\nAre the counts the same? \n\tinstalledRPMSData: %d\n\tparsedList:        %d" %(len(installedRPMSData), len(parsedList)))
         return parsedList
     parseInstalledRPMSData = staticmethod(parseInstalledRPMSData)
 

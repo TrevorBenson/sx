@@ -11,7 +11,6 @@ sos_commands/networking/
 """
 import re
 import logging
-import six
 
 import sx
 from sx.logwriter import LogWriter
@@ -480,8 +479,7 @@ class NetworkMap(NetworkInterface):
                 (int(self.getBondedModeNumber()) >= 0))
 
     def isBondedSlaveInterface(self):
-        # print self.getNetworkScriptMap().keys()
-        six.print_(self.getNetworkScriptMap().keys())
+        print(self.getNetworkScriptMap().keys())
         if (self.getNetworkScriptMap().has_key("SLAVE")):
             return ((self.getNetworkScriptMap().get("SLAVE").lower() == "yes") and
                     (len(self.getBondedMasterInterface()) > 0))

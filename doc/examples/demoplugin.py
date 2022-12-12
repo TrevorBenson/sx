@@ -14,7 +14,6 @@ It will need to be enabled.
 @copyright :  GPLv2
 """
 import logging
-import six
 
 import sx
 import sx.plugins
@@ -145,9 +144,9 @@ class Demoplugin(sx.plugins.PluginBase):
         # #######################################################################
         # Write information gathered to console
         # #######################################################################
-        six.print_("\t  This is the uptime information generated:")
+        print("\t  This is the uptime information generated:")
         for key in self.__uptime.keys() :
-            six.print_("\t  %s: %s" %(key, self.__uptime[key]))
+            print("\t  %s: %s" %(key, self.__uptime[key]))
 
         # #######################################################################
         # Write information gathered to a report file.

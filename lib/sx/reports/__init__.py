@@ -13,7 +13,6 @@ import os.path
 import shutil
 import re
 import logging
-import six
 
 import sx
 from sx.logwriter import LogWriter
@@ -38,16 +37,11 @@ class ReportsHelper:
         if (not len(loadedReport) > 0):
             logging.getLogger(sx.MAIN_LOGGER_NAME).error("There were no reports found.")
         else:
-            six.print_("List of installed report types:")
-            # print "List of installed report types:"
+            print("List of installed report types:")
             for report in loadedReport:
-                six.print_("%s(%s):  %s" % (ConsoleUtil.colorText(report.getName(), "lblue"),
+                print("%s(%s):  %s" % (ConsoleUtil.colorText(report.getName(), "lblue"),
                                             report.TYPE_DETECTION_FILE,
                                             report.getDescription()))
-
-                # print "%s(%s):  %s" %(ConsoleUtil.colorText(report.getName(),"lblue"),
-                #                       report.TYPE_DETECTION_FILE,
-                #                       report.getDescription())
 
 
 class Report:

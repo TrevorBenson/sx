@@ -13,7 +13,6 @@ import os
 import os.path
 import logging
 import json
-import six 
 
 import sx
 from sx.logwriter import LogWriter
@@ -43,21 +42,16 @@ class PluginsHelper:
                 enabledMessage = "There was no plugins enabled."
             if (not len(disabledMessage) > 0):
                 disabledMessage = "There was no plugins disabled."
-            six.print_("\n{}\n{}".format(enabledMessage, disabledMessage))
-            # print  "\n%s\n%s" %(enabledMessage, disabledMessage)
-            six.print_("The list of available options for plugins:")
-            # print "The list of available options for plugins:"
+            print("\n{}\n{}".format(enabledMessage, disabledMessage))
+            print("The list of available options for plugins:")
             for plugin in loadedPlugins:
                 optionNames = plugin.getOptions()
                 if (len(optionNames) > 0):
                     for optionName in optionNames :
                         optionDescription = plugin.getOptionDescription(optionName)
-                        six.print_("{}.{}: {}".format(ConsoleUtil.colorText(str(plugin.getName()),"red"),
+                        print("{}.{}: {}".format(ConsoleUtil.colorText(str(plugin.getName()),"red"),
                                             ConsoleUtil.colorText(optionName,"red"),
                                             optionDescription))
-                        # print "%s.%s: %s" %(ConsoleUtil.colorText(str(plugin.getName()),"red"),
-                        #                     ConsoleUtil.colorText(optionName,"red"),
-                        #                     optionDescription)
 
     def getEnabledPluginsList(self, pathToPluginReportDir, enableAllPlugins, disableAllPlugins,
                               listOfEnabledPlugins, listOfDisabledPlugins, pluginsOptionsMap,
@@ -500,8 +494,7 @@ class PluginBase:
             # Python 2.6 has "as", 2.5 does not  except UnicodeEncodeError as e:
             message = "There was a unicode encode error on file: %s." %(filename)
             logging.getLogger(sx.MAIN_LOGGER_NAME).error(message)
-            six.print_(e)
-            # print e
+            print(e)
         except IOError:
             message = "There was an error writing the file: %s." %(filename)
             logging.getLogger(sx.MAIN_LOGGER_NAME).error(message)
@@ -621,8 +614,7 @@ class PluginBase:
             # Python 2.6 has "as", 2.5 does not  except UnicodeEncodeError as e:
             message = "There was a unicode encode error on file: %s." %(filename)
             logging.getLogger(sx.MAIN_LOGGER_NAME).error(message)
-            six.print_(e)
-            # print e
+            print(e)
         except IOError:
             message = "There was an error writing the file: %s." %(filename)
             logging.getLogger(sx.MAIN_LOGGER_NAME).error(message)

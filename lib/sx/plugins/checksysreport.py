@@ -13,7 +13,6 @@ import os
 import os.path
 import logging
 import subprocess
-import six
 
 import sx
 import sx.plugins
@@ -137,8 +136,7 @@ class Checksysreport(sx.plugins.PluginBase):
                 fileInput = fileinput.input(pathToFile, inplace=True)
                 for line in fileInput:
                     if (line != '\n'):
-                        # print line,
-                        six.print_(line,)
+                        print(line,)
                 fileInput.close()
             except IOError:
                 pass
