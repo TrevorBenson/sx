@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This is a konsole plugin open up a tab in konsole session.
 
@@ -108,7 +108,7 @@ class Konsole(sx.plugins.PluginBase):
                     except dbus.exceptions.DBusException, e:
                         message = "An error occurred trying to communicate with dbus to create/modify a session."
                         logging.getLogger(sx.MAIN_LOGGER_NAME).error(message)
-                        print e
+                        print(e)
                 else:
                     message = "The report directory does not exist: %s" % (pathToReport)
                     logging.getLogger(sx.MAIN_LOGGER_NAME).error(message)

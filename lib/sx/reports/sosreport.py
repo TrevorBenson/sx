@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This file contains various containers for working with
 sosreports/sysreports reports.
@@ -175,11 +175,11 @@ class Sosreport(sx.reports.Report) :
         """
         fileContents = extractor.getDataFromFile("/sos_commands/kernel/uname_-a")
         if (len(fileContents) > 0):
-            self.__hostname = string.strip(string.split(fileContents[0])[1])
+            self.__hostname = str.strip(str.split(fileContents[0])[1])
         else:
             fileContents = extractor.getDataFromFile("sos_commands/general/hostname")
             if (len(fileContents) > 0):
-                self.__hostname = string.strip(fileContents[0])
+                self.__hostname = str.strip(fileContents[0])
             else:
                 self.__hostname = "unknown_hostname"
         # Now call the parent function to finish the extraction

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This class does various operations on a /etc/cluster/cluster.conf file
 that is in xml format.
@@ -21,13 +21,8 @@ from sx.tools import FileUtil
 from sx.tools import StringUtil
 from sx.plugins.lib.storage.filesysparser import FilesysMount
 
-# Elemtree throws different exception in python 2.6(pyexpat.error)
-# versus what is thrown in python2.7(ParseError).
-from sys import exc_type as ParseError
-try:
-    from xml.etree.ElementTree import ParseError
-except ImportError:
-    from xml.parsers.expat import ExpatError as ParseError
+from xml.etree.ElementTree import ParseError
+
 
 class Quorumd:
     def __init__(self, quorumdAttributes, clusternodesCount):
@@ -77,7 +72,7 @@ class Quorumd:
             return ""
 
     def attributeExist(self, name):
-        if (self.__quorumdAttributes.has_key(name)):
+        if name in self.__quorumdAttributes:
             return True
         return False
 
@@ -197,13 +192,13 @@ class QuorumdHeuristic:
         # The default interval is determined by the qdiskd timeout. Not sure how
         # to get that. By default I will set to -1.
         self.__tko = "-1"
-        if (heuristicAttributes.has_key("program")):
+        if "program" in heuristicAttributes:
            self.__program = heuristicAttributes.get("program")
-        if (heuristicAttributes.has_key("interval")):
+        if "interval" in heuristicAttributes:
             self.__interval = heuristicAttributes.get("interval")
-        if (heuristicAttributes.has_key("score")):
+        if "score" in heuristicAttributes:
             self.__score = heuristicAttributes.get("score")
-        if (heuristicAttributes.has_key("tko")):
+        if "tko" in heuristicAttributes:
             self.__tko = heuristicAttributes.get("tko")
 
     def __str__(self):
@@ -318,7 +313,7 @@ class ClusteredResource():
         return self.__attributesMap.keys()
 
     def getAttribute(self, attributeName):
-        if (self.__attributesMap.has_key(attributeName)):
+        if attributeName in self.__attributesMap:
             return self.__attributesMap.get(attributeName)
         return ""
 
@@ -650,7 +645,7 @@ class ClusterHAConfAnalyzer :
                 # I will skip the header declaration to avoid these.
                 if (not line.startswith("<?xml")):
                     if (line.find("=***") >= 0):
-                        line = re.sub("=\*\*\*", "=\"***\"", line)
+                        line = re.sub(r"=\*\*\*", r"=\"***\"", line)
                     if (line.find('"<') >=0):
                         line = re.sub('="<', '="', line)
                     if (line.find('>"') >=0):
@@ -1331,7 +1326,7 @@ class ClusterHAConfAnalyzer :
             clusteredResource = self.__getClusteredResource(resourceElement, False)
             if (not clusteredResource == None):
                 key = "%s-%s" %(clusteredResource.getType(), clusteredResource.getName())
-                if (not sharedResourceMap.has_key(key)):
+                if key not in sharedResourceMap:
                     sharedResourceMap[key] = clusteredResource
         return sharedResourceMap.values()
 
@@ -1352,7 +1347,7 @@ class ClusterHAConfAnalyzer :
                     except KeyError:
                         pass
                     # Build the Service.
-                    if (not servicesMap.has_key(name)):
+                    if name not in servicesMap:
                         level = 1
                         order = 1
                         listOfClusteredResourcesinService = []

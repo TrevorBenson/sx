@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 
 @author    :  Shane Bradley
@@ -25,6 +25,9 @@ class Tarextractor(Extractor) :
         try :
             tarTask = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             (stdout, stderr) = tarTask.communicate()
+            # Decode a bytes like object into a string
+            if isinstance(stdout, bytes):
+                stdout = stdout.decode()
             if ((stdout.find("GNU") >= 0) or (tarTask.returncode  == 0)):
                 return True
             else:
@@ -80,6 +83,9 @@ class Tarextractor(Extractor) :
         fileList =  self.list()
         fullPathToFile = ""
         for item in fileList:
+            # Decode bytes like object to str
+            if isinstance(item, bytes):
+                item = item.decode()
             splitItem = item.split("/", 1)
             # Strip any leading slashes because the result will not
             # contain one.

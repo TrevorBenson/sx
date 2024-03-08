@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This is a collection of classes that contain data for files from a
 sosreport in the directory:
@@ -43,8 +43,8 @@ class NetworkDeviceParser:
         if (etcHostsData == None):
             return etcHostsMap
 
-        ipRegex = "(?:[\d]{1,3})\.(?:[\d]{1,3})\.(?:[\d]{1,3})\.(?:[\d]{1,3})"
-        rem = re.compile("(%s)\s(.*)" %(ipRegex))
+        ipRegex = r"(?:[\d]{1,3})\.(?:[\d]{1,3})\.(?:[\d]{1,3})\.(?:[\d]{1,3})"
+        rem = re.compile(r"(%s)\s(.*)" %(ipRegex))
         for line in etcHostsData:
             # Remove any new line garabage.
             line = line.strip()
@@ -62,7 +62,7 @@ class NetworkDeviceParser:
                 hostnamesNoComments = hostnames.split("#")[0]
                 hostnamesNoComments = hostnamesNoComments.split()
                 # If the key is already in map then just combine the arrays.
-                if (etcHostsMap.has_key(ipAddress)):
+                if ipAddress in etcHostsMap:
                     etcHostsMap[ipAddress] = (etcHostsMap[ipAddress] + hostnamesNoComments)
                 else:
                      etcHostsMap[ipAddress] = hostnamesNoComments
@@ -75,9 +75,9 @@ class NetworkDeviceParser:
             return networkInterfaces
 
         # 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 16436 qdisc noqueue
-        remIface = re.compile("([0-9].*): (?P<interface>.*): <(?P<listOfStates>.*)> mtu (?P<mtu>[0-9]?[0-9]?[0-9]?[0-9]?[0-9]?[0-9]) (?P<otherOptions>.*)")
-        remLink = re.compile("link/(?P<interfaceType>loopback|ether) (?P<hwAddr>[0-9a-zA-Z\:].*) brd (?P<brd>[0-9a-zA-Z\:])")
-        remInet = re.compile("inet (?P<ipv4Address>([\d\.]*))/(?P<subnetMask>([\d\.]*)) .*")
+        remIface = re.compile(r"([0-9].*): (?P<interface>.*): <(?P<listOfStates>.*)> mtu (?P<mtu>[0-9]?[0-9]?[0-9]?[0-9]?[0-9]?[0-9]) (?P<otherOptions>.*)")
+        remLink = re.compile(r"link/(?P<interfaceType>loopback|ether) (?P<hwAddr>[0-9a-zA-Z\:].*) brd (?P<brd>[0-9a-zA-Z\:])")
+        remInet = re.compile(r"inet (?P<ipv4Address>([\d\.]*))/(?P<subnetMask>([\d\.]*)) .*")
         for index in range(0, len(ip_addressData)):
             # A counter that will increment on each regex that finds a
             # match.
@@ -122,12 +122,12 @@ class NetworkDeviceParser:
         if (ifconfigData == None):
             return networkInterfaces
         # Does english and spanish currently.
-        remIface = re.compile("(.*)Link.*HW.*\s([0-9a-zA-Z\:].*)")
-        remLoopback = re.compile("(.*)Link encap:(Local Loopback.*|Loopback Local.*)")
-        remIPV4Addr  = re.compile(".*(inet addr|inet end.):\s?([\d\.]*)\s.*(Mask|Masc):([\d\.]*)")
+        remIface = re.compile(r"(.*)Link.*HW.*\s([0-9a-zA-Z\:].*)")
+        remLoopback = re.compile(r"(.*)Link encap:(Local Loopback.*|Loopback Local.*)")
+        remIPV4Addr  = re.compile(r".*(inet addr|inet end.):\s?([\d\.]*)\s.*(Mask|Masc):([\d\.]*)")
 
-        remIPV6Addr  = re.compile(".*inet6 addr:.*|en.*inet6:")
-        remMTUMetric = re.compile("(?P<states>.*)  MTU:(?P<mtu>.*)  M.*:(?P<metric>.*).*")
+        remIPV6Addr  = re.compile(r".*inet6 addr:.*|en.*inet6:")
+        remMTUMetric = re.compile(r"(?P<states>.*)  MTU:(?P<mtu>.*)  M.*:(?P<metric>.*).*")
         for index in range(0, len(ifconfigData)):
             # A counter that will increment on each regex that finds a
             # match.
@@ -316,15 +316,15 @@ class NetworkMap(NetworkInterface):
                  networkingCommandsMap):
         # If interface is not found, but sysconfig file has data then search it.
         if (not len(ipv4Addr) > 0):
-            if (networkScriptMap.has_key("IPADDR")):
+            if "IPADDR" in networkScriptMap:
                 if (len(networkScriptMap.get("IPADDR")) > 0):
                     ipv4Addr = networkScriptMap.get("IPADDR")
         if (not len(subnetMask) > 0):
-            if (networkScriptMap.has_key("NETMASK")):
+            if "NETMASK" in networkScriptMap:
                 if (len(networkScriptMap.get("NETMASK")) > 0):
                     subnetMask = networkScriptMap.get("NETMASK")
         if (not len(hwAddr) > 0):
-            if (networkScriptMap.has_key("HWADDR")):
+            if "HWADDR" in networkScriptMap:
                 if (len(networkScriptMap.get("HWADDR")) > 0):
                     hwAddr = networkScriptMap.get("HWADDR")
 
@@ -338,7 +338,7 @@ class NetworkMap(NetworkInterface):
         self.__procNetMap = procNetMap
         self.__networkingCommandsMap = networkingCommandsMap
         self.__hostnames = []
-        if (self.__etcHostsMap.has_key(self.getIPv4Address())):
+        if self.getIPv4Address() in self.__etcHostsMap:
             self.__hostnames = self.__etcHostsMap.get(self.getIPv4Address())
         # Bonded options
         self.__bondedModeNumber = None
@@ -381,7 +381,7 @@ class NetworkMap(NetworkInterface):
 
     def __getEthToolIDeviceMap(self, interface):
         ethtoolIMap = self.__getEthToolIMap()
-        if (ethtoolIMap.has_key(interface)):
+        if interface in ethtoolIMap:
             return ethtoolIMap.get(interface)
         return {}
 
@@ -398,7 +398,7 @@ class NetworkMap(NetworkInterface):
         return False
 
     def isOnBootEnabled(self):
-        if (self.getNetworkScriptMap().has_key("ONBOOT")):
+        if "ONBOOT" in self.getNetworkScriptMap():
             if self.getNetworkScriptMap().get("ONBOOT") == "yes":
                 return True
         return False
@@ -442,12 +442,12 @@ class NetworkMap(NetworkInterface):
 
     def getBootProtocal(self):
         bootProtocal = ""
-        if (self.getNetworkScriptMap().has_key("BOOTPROTO")):
+        if "BOOTPROTO" in self.getNetworkScriptMap():
             bootProtocal = self.getNetworkScriptMap().get("BOOTPROTO")
             if (bootProtocal.lower() == "none"):
                 # If bootproto is none and they have set IPADDR then
                 # they are using static ip addressing.
-                if (self.getNetworkScriptMap().has_key("IPADDR")):
+                if "IPADDR" in self.getNetworkScriptMap():
                     if (len(self.getNetworkScriptMap().get("IPADDR")) > 0):
                         bootProtocal = "static"
         return bootProtocal
@@ -460,7 +460,7 @@ class NetworkMap(NetworkInterface):
                 return modprobeCommand.getModuleName()
 
         ethtoolIDeviceMap = self.__getEthToolIDeviceMap(self.getInterface())
-        if (ethtoolIDeviceMap.has_key("driver")):
+        if "driver" in ethtoolIDeviceMap:
             return ethtoolIDeviceMap.get("driver")
         # There is no module loaded for the loopback interface and I have
         # verified this.
@@ -479,8 +479,8 @@ class NetworkMap(NetworkInterface):
                 (int(self.getBondedModeNumber()) >= 0))
 
     def isBondedSlaveInterface(self):
-        print self.getNetworkScriptMap().keys()
-        if (self.getNetworkScriptMap().has_key("SLAVE")):
+        print(self.getNetworkScriptMap().keys())
+        if "SLAVE" in self.getNetworkScriptMap():
             return ((self.getNetworkScriptMap().get("SLAVE").lower() == "yes") and
                     (len(self.getBondedMasterInterface()) > 0))
         return False
@@ -492,7 +492,7 @@ class NetworkMap(NetworkInterface):
         self.__listOfBondedSlaveInterfaces.append(slaveInterface)
 
     def getBondedMasterInterface(self):
-        if (self.getNetworkScriptMap().has_key("MASTER")):
+        if "MASTER" in self.getNetworkScriptMap():
             return self.getNetworkScriptMap().get("MASTER")
         return ""
 
@@ -507,7 +507,7 @@ class NetworkMap(NetworkInterface):
                     interfaceAlias = modprobeCommand.getModuleName()
 
         bondingOptions = ""
-        if (self.getNetworkScriptMap().has_key("BONDING_OPTS")):
+        if "BONDING_OPTS" in self.getNetworkScriptMap():
             bondingOptions = self.getNetworkScriptMap().get("BONDING_OPTS")
         for modprobeCommand in self.getModprobeConfCommands():
             if (modprobeCommand.getCommand().lower() == "options"):
@@ -533,19 +533,19 @@ class NetworkMap(NetworkInterface):
                                 # Set number
                                 self.__bondedModeNumber = key
                                 return self.__bondedModeNumber
-            if ((not int(self.__bondedModeNumber) > 0) and (self.__procNetMap.has_key(self.getInterface()))):
+            if int(self.__bondedModeNumber) <= 0 and self.getInterface() in self.__procNetMap:
                 bondingData = self.__procNetMap.get(self.getInterface())
                 for line in bondingData:
                     lineSplit = line.split(":")
                     if ((len(lineSplit) >= 2) and lineSplit[0].startswith("Bonding Mode")):
                         bondingModeName = lineSplit[1].strip().rstrip("\n")
-                        if (BONDING_MODE_NAMES_MAP.has_key(bondingModeName)):
+                        if bondingModeName in BONDING_MODE_NAMES_MAP:
                             self.__bondedModeNumber = BONDING_MODE_NAMES_MAP.get(bondingModeName)
         return self.__bondedModeNumber
 
     def getBondedModeName(self):
         bondedModeNumber = self.getBondedModeNumber()
-        if (BONDING_MODES_MAP.has_key(bondedModeNumber)):
+        if bondedModeNumber in BONDING_MODES_MAP:
             return BONDING_MODES_MAP[bondedModeNumber]
         return ""
 
@@ -562,17 +562,17 @@ class NetworkMap(NetworkInterface):
     # Bridge functions
     # ###########################################################################
     def isBridgedInterface(self):
-        if (self.getNetworkScriptMap().has_key("BRIDGE")):
+        if "BRIDGE" in self.getNetworkScriptMap():
             return (len(self.getNetworkScriptMap().get("BRIDGE").lower()) > 0)
         return False
 
     def isVirtualBridgedInterface(self):
-        if (self.getNetworkScriptMap().has_key("TYPE")):
+        if "TYPE" in self.getNetworkScriptMap():
             return (self.getNetworkScriptMap().get("TYPE").lower() == "bridge")
         return False
 
     def getVirtualBridgedInterface(self):
-        if (self.getNetworkScriptMap().has_key("BRIDGE")):
+        if "BRIDGE" in self.getNetworkScriptMap():
             return self.getNetworkScriptMap().get("BRIDGE")
         return ""
 
@@ -605,7 +605,7 @@ class NetworkMaps:
         for networkInterface in self.__networkInterfaces:
             #print networkInterface.getInterface()
             networkScriptMap = NetworkDeviceParser.parseEtcSysconfigNetworkScript(self.__networkScriptsDataMap.get(networkInterface.getInterface()))
-            if (not mapOfNetworkMaps.has_key(networkInterface.getInterface())):
+            if networkInterface.getInterface() not in mapOfNetworkMaps:
                 networkMap = NetworkMap(networkInterface.getInterface(),
                                         networkInterface.getHardwareAddress(),
                                         networkInterface.getIPv4Address(),
@@ -622,29 +622,30 @@ class NetworkMaps:
         # print "CHECK THAT USE CASE FOR WHEN NETWORKING HAS NO IPS. Problem is ifconfig data does not contain the bond0 that is not up."
         for key in mapOfNetworkMaps.keys():
             masterBondedInterface = mapOfNetworkMaps[key].getBondedMasterInterface().replace("\"", "")
-            if (mapOfNetworkMaps.has_key(masterBondedInterface)):
+            if masterBondedInterface in mapOfNetworkMaps:
                 mapOfNetworkMaps[masterBondedInterface].addBondedSlaveInterfaces(mapOfNetworkMaps[key])
 
         # Set all the parent aliases if there is one.
         for key in mapOfNetworkMaps.keys():
             currentNetworkMap = mapOfNetworkMaps[key]
             interfaceNameSplit = currentNetworkMap.getInterface().split(".")
-            if ((len(interfaceNameSplit) == 2) and (mapOfNetworkMaps.has_key(interfaceNameSplit[0]))):
+            if len(interfaceNameSplit) == 2 and interfaceNameSplit[0] in mapOfNetworkMaps:
                 currentNetworkMap.setParentAliasNetworkMap(mapOfNetworkMaps.get(interfaceNameSplit[0]))
             else:
                 interfaceNameSplit = currentNetworkMap.getInterface().split(":")
-                if ((len(interfaceNameSplit) == 2) and (mapOfNetworkMaps.has_key(interfaceNameSplit[0]))):
+                if len(interfaceNameSplit) == 2 and interfaceNameSplit[0] in mapOfNetworkMaps:
                     currentNetworkMap.setParentAliasNetworkMap(mapOfNetworkMaps.get(interfaceNameSplit[0]))
 
         # Add any virtual bridge devices to any bridge interfaces.
         for key in mapOfNetworkMaps.keys():
             virtualBridgeInterface = mapOfNetworkMaps[key].getVirtualBridgedInterface()
-            if (mapOfNetworkMaps.has_key(virtualBridgeInterface)):
+            if virtualBridgeInterface in mapOfNetworkMaps:
                 mapOfNetworkMaps[key].setVirtualBridgedNetworkMap(mapOfNetworkMaps[virtualBridgeInterface])
         return mapOfNetworkMaps
 
     def getListOfNetworkMaps(self):
-        listOfNetworkMaps = self.__mapOfNetworkMaps.values()
+        # Assuming self.networkMaps is the dictionary of network maps
+        listOfNetworkMaps = list(self.__mapOfNetworkMaps.values())
         listOfNetworkMaps.sort(key=lambda m: m.getInterface())
         return listOfNetworkMaps
 

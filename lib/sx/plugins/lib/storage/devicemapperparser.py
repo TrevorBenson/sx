@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This is a collection of classes that contain data for files from a
 sosreport in the directory:
@@ -238,7 +238,7 @@ class DMSetupTable:
     def __findMajorMinorPairs(self):
         majorMinorPairs = []
         import re
-        rem = re.compile("^(?P<majorNumber>\d+):(?P<minorNumber>\d+)")
+        rem = re.compile(r"^(?P<majorNumber>\d+):(?P<minorNumber>\d+)")
         for item in self.getTargetParameters():
             mo = rem.match(item)
             if mo:

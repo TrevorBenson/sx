@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This is a collection of classes that contain data for files from a
 sosreport in the directory:
@@ -27,10 +27,10 @@ class RunLevelParser:
             #    "[0-6].(?P<runlevel3>o[f|n][f]?)\s*[0-6].(?P<runlevel4>o[f|n][f]?)\s*" + \
             #    "[0-6].(?P<runlevel5>o[f|n][f]?)\s*[0-6].(?P<runlevel6>o[f|n][f]?).*$"
 
-            regexStanza = "^(?P<name>\w+(-\w+)?)\s*[0-6].(?P<runlevel0>o[f|n][f]?|desactivado|activo)\s*" + \
-                "[0-6].(?P<runlevel1>o[f|n][f]?|desactivado|activo)\s*[0-6].(?P<runlevel2>o[f|n][f]?|desactivado|activo)\s*" + \
-                "[0-6].(?P<runlevel3>o[f|n][f]?|desactivado|activo)\s*[0-6].(?P<runlevel4>o[f|n][f]?|desactivado|activo)\s*" + \
-                "[0-6].(?P<runlevel5>o[f|n][f]?|desactivado|activo)\s*[0-6].(?P<runlevel6>o[f|n][f]?|desactivado|activo).*$"
+            regexStanza = r"^(?P<name>\w+(-\w+)?)\s*[0-6].(?P<runlevel0>o[f|n][f]?|desactivado|activo)\s*" + \
+                r"[0-6].(?P<runlevel1>o[f|n][f]?|desactivado|activo)\s*[0-6].(?P<runlevel2>o[f|n][f]?|desactivado|activo)\s*" + \
+                r"[0-6].(?P<runlevel3>o[f|n][f]?|desactivado|activo)\s*[0-6].(?P<runlevel4>o[f|n][f]?|desactivado|activo)\s*" + \
+                r"[0-6].(?P<runlevel5>o[f|n][f]?|desactivado|activo)\s*[0-6].(?P<runlevel6>o[f|n][f]?|desactivado|activo).*$"
 
             remStanza = re.compile(regexStanza)
             for item in chkConfigData:

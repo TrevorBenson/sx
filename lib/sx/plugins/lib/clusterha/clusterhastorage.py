@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This script will create a class that will be used to get informaton about GFS,
 GFS2, and filesystem resources in the cluster.conf.
@@ -51,7 +51,7 @@ class ClusterHAStorage():
                     locationFound += "M"
                 if (fs.isClusterConfMount()):
                     locationFound += "C"
-                if (not fsMap.has_key(clusternodeName)):
+                if clusternodeName not in fsMap:
                     fsMap[clusternodeName] = []
                 fsMap.get(clusternodeName).append([fs.getDeviceName(), fs.getMountPoint(), fs.getFSType(), locationFound])
         rString  = ""
@@ -59,7 +59,7 @@ class ClusterHAStorage():
         stringUtil = StringUtil()
         for clusternodeName in self.__cnc.getClusterNodeNames():
             # In the future I should probably add a way to only print once if they are all the same .
-            if (fsMap.has_key(clusternodeName)):
+            if clusternodeName in fsMap:
                 listOfFileystems = fsMap.get(clusternodeName)
                 if (len(listOfFileystems) > 0):
                     tableString = "%s(%d mounted GFS or GFS2 file-systems)\n%s\n\n" %(clusternodeName, len(listOfFileystems), stringUtil.toTableString(listOfFileystems, fsListHeader))

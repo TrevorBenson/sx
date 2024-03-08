@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This is a collection of classes that hold data for files that are
 located in the sos_commands/filesys directory.
@@ -24,7 +24,7 @@ class FilesysParser:
             return parsedList
 
         # The re match for clients
-        regex = "(?P<clients>.*)\((?P<clientsOptions>.*)\)"
+        regex = r"(?P<clients>.*)\((?P<clientsOptions>.*)\)"
         rem = re.compile(regex)
 
         for line in etcExportsData:
@@ -103,14 +103,14 @@ class FilesysParser:
             if (not len(fsTypesString) == 0):
                 fsTypesString += "|"
             fsTypesString += "%s"%(fsType)
-        fsTypesRegex = "(?P<fsType>%s)" %(fsTypesString)
+        fsTypesRegex = r"(?P<fsType>%s)" %(fsTypesString)
 
         # Need way to get all possible devices
-        regex = "^(?P<device>none|usbfs|automount.*|/.*)" + " on " + \
-            "(?P<mountPoint>/.*)" + " type " +  \
+        regex = r"^(?P<device>none|usbfs|automount.*|/.*)" + " on " + \
+            r"(?P<mountPoint>/.*)" + " type " +  \
             fsTypesRegex + " " + \
-            "(?P<fsOptions>\(.*\))" + \
-            "(?P<fsAttributes>.*)"
+            r"(?P<fsOptions>\(.*\))" + \
+            r"(?P<fsAttributes>.*)"
         rem = re.compile(regex)
 
         for line in filesysMountData:
@@ -147,7 +147,7 @@ class EtcExport:
         return self.__clientsOptionsMap.keys()
 
     def getClientOptions(self, client):
-        if (self.__clientsOptionsMap.has_key(client)):
+        if client in self.__clientsOptionsMap:
             return self.__clientsOptionsMap.get(client)
         return []
 
@@ -169,7 +169,7 @@ class EtcSambaSmbConfSection:
         return self.__sectionMap.keys()
 
     def getOptionValue(self, optionName):
-        if (self.__sectionMap.has_key(optionName)):
+        if optionName in self.__sectionMap:
             return self.__sectionMap.get(optionName).strip()
         return ""
 

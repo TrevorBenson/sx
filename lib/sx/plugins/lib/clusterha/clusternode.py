@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This classes are for cluster nodes in the sosreport/sysreport. They
 represnet configs files paths and other items that are needed for all
@@ -83,7 +83,7 @@ class ClusterStorageFilesystem(FilesysMount):
         return self.__smbClusteredSectionsMap.keys()
 
     def getClusteredSMBSectionList(self, name):
-        if (self.__smbClusteredSectionsMap.has_key(name)):
+        if name in self.__smbClusteredSectionsMap:
             return self.__smbClusteredSectionsMap.get(name)
         return []
 
@@ -114,7 +114,7 @@ class ClusterStorageFilesystem(FilesysMount):
 
     def addClusteredSMBSection(self, name, smbSection):
         # Overwrite existing list if it is already in map.
-        if (self.__smbClusteredSectionsMap.has_key(name)):
+        if name in self.__smbClusteredSectionsMap:
             self.__smbSectionList = self.__smbClusteredSectionsMap.get(name)
         else:
             self.__smbClusteredSectionsMap[name]  = [smbSection]
@@ -509,7 +509,7 @@ class ClusterNode:
         if (not len(transportMode) > 0):
             distroRelease = self.getDistroRelease()
             if (distroRelease.getDistroName() == "RHEL"):
-                if (ClusterNode.RHEL_CLUSTER_DEFAULT_TRANSPORT_MODE.has_key(distroRelease.getMajorVersion())):
+                if distroRelease.getMajorVersion() in ClusterNode.RHEL_CLUSTER_DEFAULT_TRANSPORT_MODE:
                     transportMode = ClusterNode.RHEL_CLUSTER_DEFAULT_TRANSPORT_MODE.get(distroRelease.getMajorVersion())
         return transportMode
 
@@ -524,7 +524,7 @@ class ClusterNode:
         returned.
         @type key: String
         """
-        if (self.__clusterCommandsMap.has_key(key)):
+        if key in self.__clusterCommandsMap:
             return self.__clusterCommandsMap.get(key)
         return ""
 

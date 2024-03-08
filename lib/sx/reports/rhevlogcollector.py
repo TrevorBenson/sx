@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This class is a container for rhev log collector report object.
 
@@ -74,7 +74,7 @@ class Rhevlogcollector(Report) :
         if (len(fileContents) > 0):
             #regex = ".*%s%s%s.*" %("<add baseAddress=\"net.tcp://", "localhost", ":8006/backend\"")
             #regex = ".*%s%s%s.*" %("<add baseAddress=\"net.tcp://", "(?P<hostname>localhost)", ":8006/backend\"")
-            regex = ".*%s%s%s.*" %("<add baseAddress=\"net.tcp://", "(?P<hostname>\w+)", ":8006/backend\"")
+            regex = r".*%s%s%s.*" %("<add baseAddress=\"net.tcp://", r"(?P<hostname>\w+)", ":8006/backend\"")
             rem = re.compile(regex)
             for line in fileContents:
                 mo = rem.match(line)

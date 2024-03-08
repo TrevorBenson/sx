@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This class will evalatuate a cluster and create a report that will
 link in known issues with links to resolution.
@@ -44,7 +44,7 @@ class ClusterEvaluator():
         clusterNameCharSize = len(list(cca.getClusterName()))
         if (clusterNameCharSize > 16):
             description = "The name of the cluster cannot be more than 16 characters in size. The cluster's name "
-            description += "\%s\" is %d characters long." %(cca.getClusterName(), clusterNameCharSize)
+            description += r"\%s\" is %d characters long." %(cca.getClusterName(), clusterNameCharSize)
             urls = ["https://access.redhat.com/solutions/32.17"]
             rString += StringUtil.formatBulletString(description, urls)
 
@@ -492,8 +492,8 @@ class ClusterEvaluator():
         # Heuristics Evaluations
         # ###################################################################
         stringUtil = StringUtil()
-        remPing = re.compile("^(?P<command>ping|/bin/ping) .*")
-        remPingDT = re.compile("^(?P<command>ping|/bin/ping) .*-(?P<deadlineTimeout>w\d?\d?\d|w \d?\d?\d).*")
+        remPing = re.compile(r"^(?P<command>ping|/bin/ping) .*")
+        remPingDT = re.compile(r"^(?P<command>ping|/bin/ping) .*-(?P<deadlineTimeout>w\d?\d?\d|w \d?\d?\d).*")
 
         # The list of heuristics that are using the "ping" command for the
         # program that does not have -w option enabled or the -w option is <= 0.
@@ -600,7 +600,7 @@ class ClusterEvaluator():
             bondedSlaveInterfacesMap = {}
             for bondedSlaveInterface in hbNetworkMap.getBondedSlaveInterfaces():
                 if (bondedSlaveInterface.getNetworkInterfaceModule().strip() in solutionNicModuleUrlMap.keys()):
-                    if (not bondedSlaveInterfacesMap.has_key(bondedSlaveInterface.getNetworkInterfaceModule())):
+                    if bondedSlaveInterface.getNetworkInterfaceModule() not in bondedSlaveInterfacesMap:
                         bondedMasterInterface = hbNetworkMap.getInterface()
                         bondedSlaveInterfacesMap[bondedSlaveInterface.getNetworkInterfaceModule()] = []
                     bondedSlaveInterfacesMap.get(bondedSlaveInterface.getNetworkInterfaceModule()).append(bondedSlaveInterface.getInterface())
@@ -759,10 +759,10 @@ class ClusterEvaluator():
             # Verify that lvm an lvm2-cluster are same major and minor version.
             # ###################################################################
             lvm2PackageMap = RPMUtils.getPackageVersion(clusternode.getInstalledRPMS(), ["lvm2", "lvm2-cluster"])
-            if (lvm2PackageMap.has_key("lvm2-cluster")):
+            if "lvm2-cluster" in lvm2PackageMap:
                 lvm2clusterPackage = lvm2PackageMap.get("lvm2-cluster")[0]
                 # Dont going to handle lvm2 not found cause that is highly unlikely.
-                if (lvm2PackageMap.has_key("lvm2")):
+                if "lvm2" in lvm2PackageMap:
                     lvm2Package = lvm2PackageMap.get("lvm2")[0]
                     lvm2clusterVersion = lvm2clusterPackage.replace("lvm2-cluster-", "").split(".el5")[0].split("-")[0].strip()
                     lvm2Version = lvm2Package.replace("lvm2-", "").split(".el5")[0].split("-")[0].strip()

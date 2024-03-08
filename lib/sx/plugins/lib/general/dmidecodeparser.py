@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 
 @author    :  Shane Bradley
@@ -91,6 +91,6 @@ class DMIDecodeStanza:
         return self.__attributesMap.keys()
 
     def getAttribute(self, attributeName):
-        if (self.__attributesMap.has_key(attributeName)):
+        if attributeName in self.__attributesMap:
             return self.__attributesMap.get(attributeName)
         return None

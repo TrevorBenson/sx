@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This file contains 4 classes. ModulesLoader is default loader for all
 modules: reports, plugins, and extractors.
@@ -61,10 +61,10 @@ class ModulesLoader :
             return getattr(module, moduleClassName)
         except ValueError:
             pass
-        except ImportError,e:
+        except ImportError as e:
             message ="Import module error occurred on importing the Class \"%s\" from import: %s" %(moduleClassName, pathToModuleFile)
             logging.getLogger(sx.MAIN_LOGGER_NAME).error(message)
-            print e
+            print(e)
         return None
 
     def getClasses(self, pathToModuleBaseDir, moduleImportBase):
@@ -191,7 +191,7 @@ class ReportsLoader(ModulesLoader) :
             if (len(regex) > 0) :
                 regex += "|"
             if (not reportClass == None) :
-                regex += "(?P<%s>.*%s.*)" %(reportClass.REPORT_NAME.replace(" ", "_"), reportClass.TYPE_DETECTION_FILE.replace(".", "\."))
+                regex += "(?P<%s>.*%s.*)" %(reportClass.REPORT_NAME.replace(" ", "_"), reportClass.TYPE_DETECTION_FILE.replace(".", r"\."))
         return regex
 
     def __findReport(self, listOfFilenames, includeUserReports=True) :
@@ -216,7 +216,7 @@ class ReportsLoader(ModulesLoader) :
             regex = self.__findRegexCore
             reportClasses = self.__coreClasses
             if (includeUserReports):
-                regex = "%s|%s" %(self.__findRegexCore, self.__findRegexUser)
+                regex = r"%s|%s" %(self.__findRegexCore, self.__findRegexUser)
                 reportClasses += self.__userClasses
             detectionFileMap = {}
             for reportClass in reportClasses:
@@ -225,9 +225,12 @@ class ReportsLoader(ModulesLoader) :
             #logging.getLogger(sx.MAIN_LOGGER_NAME).debug(message)
             rem = re.compile(regex)
             for line in listOfFilenames:
+                # Decode a bytes like object into a string
+                if isinstance(line, bytes):
+                    line = line.decode()
                 mo = rem.match(line)
                 if mo:
-                    if (detectionFileMap.has_key(mo.lastgroup)):
+                    if mo.lastgroup in detectionFileMap:
                         reportClass = detectionFileMap.get(mo.lastgroup)
                         report = reportClass()
                         return report

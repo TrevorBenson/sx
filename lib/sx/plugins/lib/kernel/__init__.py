@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 
 @author    :  Shane Bradley
@@ -42,10 +42,10 @@ class KernelParser:
 class KernelRelease:
     def __init__(self, kernelRelease):
         self.__kernelRelease = kernelRelease
-        regex = "^(?P<majorRelease>2\.[0-9]*.[0-9]*)-" + \
-            "(?P<minorRelease>[0-9]*)" + \
-            "(?P<patchRelease>.*)\." + \
-            "(?P<distroRelease>fc[0-9]*|el4|el5|el6|el7)"
+        regex = r"^(?P<majorRelease>2\.[0-9]*.[0-9]*)-" + \
+            r"(?P<minorRelease>[0-9]*)" + \
+            r"(?P<patchRelease>.*)\." + \
+            r"(?P<distroRelease>fc[0-9]*|el4|el5|el6|el7)"
 
 
         rem = re.compile(regex)

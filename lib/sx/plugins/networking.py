@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 A class that can run analyze the storage aspect of a sosreport.
 
@@ -172,7 +172,7 @@ class Networking(sx.plugins.PluginBase):
                 # Get all the data from proc/net including the bonding data.
                 procNetMap = report.getDataFromDir("proc/net")
                 bondingMap = report.getDataFromDir("proc/net/bonding")
-                procNetMap = dict(procNetMap.items() + bondingMap.items())
+                procNetMap = {**procNetMap, **bondingMap}
 
                 # Get all the data in the sos_commands/networking directory.
                 networkingCommandsMap = report.getDataFromDir("sos_commands/networking")

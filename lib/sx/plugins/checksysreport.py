@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 A class that can run checksysreport against a report and then write
 the checksysreport data to a file.
@@ -140,7 +140,7 @@ class Checksysreport(sx.plugins.PluginBase):
                 fileInput = fileinput.input(pathToFile, inplace=True)
                 for line in fileInput:
                     if (line != '\n'):
-                        print line,
+                        print(line,)
                 fileInput.close()
             except IOError:
                 pass

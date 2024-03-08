@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 The Logger Class will log messages to console or to a file. If logged
 to console then text will colorize the message type.
@@ -165,7 +165,7 @@ class StreamHandlerColorized(logging.StreamHandler):
         @param color: The color that text should be colorized to.
         @type color: String
         """
-        if (not StreamHandlerColorized.CONSOLE_COLORS.has_key(color)):
+        if color not in StreamHandlerColorized.CONSOLE_COLORS:
             return text
         fgColor = StreamHandlerColorized.CONSOLE_COLORS.get(color)
         opencol = "\033["

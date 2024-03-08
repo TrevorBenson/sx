@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This is the main script that will extract reports and then run various
 plugins on them.
@@ -189,7 +189,7 @@ class SXConsole:
                 pluginName = peroidEqualSplit[0].lower()
                 pluginOptionName = keyEqualSplit[0].split(".")[1]
                 pluginOptionValue = keyEqualSplit[1]
-                if (pluginOptionsMap.has_key(pluginName)) :
+                if pluginName in pluginOptionsMap:
                     optionMap = pluginOptionsMap.get(pluginName)
                     optionMap[pluginOptionName] = pluginOptionValue
                 else:

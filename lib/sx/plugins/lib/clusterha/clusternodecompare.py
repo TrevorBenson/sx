@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This class will evalatuate a cluster and create a report that will
 link in known issues with links to resolution.
@@ -70,7 +70,7 @@ class CompareData:
                 currentCountValue = cTuple[1]
                 if (currentCountValue < maxCountValue):
                     valueCopy = deepcopy(self.__compareMap.get(currentCountKey))
-                    if (rMap.has_key(currentCountKey)):
+                    if currentCountKey in rMap:
                         rMap[currentCountKey].append(valueCopy)
                     else:
                         rMap[currentCountKey] = valueCopy
@@ -87,7 +87,7 @@ class CompareData:
             currentCountValue = cTuple[1]
             if (currentCountValue >= maxCountValue):
                 valueCopy = deepcopy(self.__compareMap.get(currentCountKey))
-                if (rMap.has_key(currentCountKey)):
+                if currentCountKey in rMap:
                     rMap[currentCountKey].append(valueCopy)
                 else:
                     rMap[currentCountKey] = valueCopy
@@ -97,7 +97,7 @@ class CompareData:
 
     def add(self, compareString, reportName):
         if ((len(compareString) > 0) and (len(reportName) > 0)):
-            if (self.__compareMap.has_key(compareString)):
+            if compareString in self.__compareMap:
                 self.__compareMap[compareString].append(reportName)
             else:
                 self.__compareMap[compareString] = [reportName]
@@ -180,7 +180,7 @@ class ComparePackages:
                 currentCountValue = cTuple[1]
                 if (currentCountValue < maxCountValue):
                     valueCopy = deepcopy(packageMap.get(currentCountKey))
-                    if (compareMap.has_key(currentCountKey)):
+                    if currentCountKey in compareMap:
                         compareMap[currentCountKey].append(valueCopy)
                     else:
                         compareMap[currentCountKey] = valueCopy
@@ -196,10 +196,10 @@ class ComparePackages:
             self.__listOfReportNames.append(reportName)
             for packageName in installedRPMSMap.keys():
                 fullPackageName = installedRPMSMap.get(packageName)[0]
-                if (not self.__compareMap.has_key(packageName)):
+                if packageName not in self.__compareMap:
                     self.__compareMap[packageName] = {}
                 packageMap = self.__compareMap.get(packageName)
-                if (packageMap.has_key(fullPackageName)):
+                if fullPackageName in packageMap:
                     packageMap.get(fullPackageName).append(reportName)
                 else:
                     packageMap[fullPackageName] = [reportName]

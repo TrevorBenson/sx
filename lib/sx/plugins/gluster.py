@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This plugin will analyze and summarize a collection of sosreports that are using gluster.
 
@@ -116,13 +116,13 @@ class Gluster(sx.plugins.PluginBase):
             pTable = []
             for peerNodeMap in glusterPeerNode.getPeerNodes():
                 pnHostname1 = ""
-                if (peerNodeMap.has_key("hostname1")):
+                if "hostname1" in peerNodeMap:
                     pnHostname1 = peerNodeMap.get("hostname1")
                 pnUUID = ""
-                if (peerNodeMap.has_key("uuid")):
+                if "uuid" in peerNodeMap:
                     pnUUID = peerNodeMap.get("uuid")
                 pnState = ""
-                if (peerNodeMap.has_key("state")):
+                if "state" in peerNodeMap:
                     pnState = peerNodeMap.get("state")
                 pTable.append([pnHostname1, pnUUID, pnState])
             if (len(pTable) > 0):
