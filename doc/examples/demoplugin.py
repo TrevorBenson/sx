@@ -4,7 +4,7 @@ This is a demo plugin to demostrate how to add plugins in. This plugin
 uses sysreport/sosreports.
 
 The plugin can be placed in the directory: $HOME/.sx/sxplugins/
-$ cp demo.py $HOME/.sx/sxplugins/
+$ cp demoplugin.py $HOME/.sx/sxplugins/
 
 It will need to be enabled.
 

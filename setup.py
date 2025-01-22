@@ -6,7 +6,7 @@ from distutils.core import setup
 # include AUTHORS
 # include PKG-INFO
 # include doc/README.txt
-# include doc/examples/demo.py
+# include doc/examples/demoplugin.py
 # include doc/examples/demoreport.py
 # include doc/examples/konsole.py
 

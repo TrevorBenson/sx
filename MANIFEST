@@ -5,6 +5,7 @@ PKG-INFO
 setup.py
 sxconsole
 doc/README.txt
+doc/examples/demoplugin.py
 doc/examples/demoreport.py
 doc/examples/konsole.py
 lib/sx/__init__.py
