@@ -1,0 +1,26 @@
+---
+name: Trunk Check
+
+on: [pull_request]
+
+concurrency:
+  group: ${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+permissions: read-all
+
+jobs:
+  trunk:
+    name: Trunk Check
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+      - name: Trunk Check
+        uses: trunk-io/trunk-action@v1
