@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/env python3
 """
 This is the main script that will extract reports and then run various
 plugins on them.
@@ -111,38 +111,38 @@ def printToConsole(pathToCompressedReports, pathToExtractedReports, mapOfPluginR
             index = 1;
             for pathToPluginReport in mapOfPluginReportPaths[key]:
                 if (not index == 1):
-                    print "%s %s" %(ConsoleUtil.colorText("%s plugin File %d: " %(key, index),"lgreen"), pathToPluginReport.replace(homeDirectory, "~"))
+                    print("%s %s" %(ConsoleUtil.colorText("%s plugin File %d: " %(key, index),"lgreen"), pathToPluginReport.replace(homeDirectory, "~")))
                 else:
                     if(headerPrinted):
-                        print "\n%s %s" %(ConsoleUtil.colorText("%s plugin File %d: " %(key, index),"lgreen"), pathToPluginReport.replace(homeDirectory, "~"))
+                        print("\n%s %s" %(ConsoleUtil.colorText("%s plugin File %d: " %(key, index),"lgreen"), pathToPluginReport.replace(homeDirectory, "~")))
                     else:
-                        print "\n%s" %(ConsoleUtil.colorText("List of Files Created by the Plugins: ","lcyan"))
-                        print "%s %s" %(ConsoleUtil.colorText("%s plugin File %d: " %(key, index),"lgreen"), pathToPluginReport.replace(homeDirectory, "~"))
+                        print("\n%s" %(ConsoleUtil.colorText("List of Files Created by the Plugins: ","lcyan")))
+                        print("%s %s" %(ConsoleUtil.colorText("%s plugin File %d: " %(key, index),"lgreen"), pathToPluginReport.replace(homeDirectory, "~")))
                         headerPrinted = True
                 index += 1;
 
     # Print paths to all files that are not reports.
     if (len(listOfNonReportPaths) > 0) :
         wasInformationPrintedToConsole = True
-        print "\n%s" %(ConsoleUtil.colorText("Details for Non-Report Files: ","lcyan"))
+        print("\n%s" %(ConsoleUtil.colorText("Details for Non-Report Files: ","lcyan")))
         index = 1;
         for pathToNonReportFile in listOfNonReportPaths:
             if (index == 1):
                 (dirPath, filename) = os.path.split(pathToNonReportFile)
-                print "%s %s" %(ConsoleUtil.colorText("Non-Report Files Directory:", "lgreen"), dirPath.replace(homeDirectory, "~"))
+                print("%s %s" %(ConsoleUtil.colorText("Non-Report Files Directory:", "lgreen"), dirPath.replace(homeDirectory, "~")))
             spacingCount = 7
             if (index >= 10):
                 spacingCount = 6
-            print "%s %s %s" %(ConsoleUtil.colorText("Non-Report File %d: " %(index),"lgreen"), (" " * spacingCount), pathToNonReportFile.replace(homeDirectory, "~"))
+            print("%s %s %s" %(ConsoleUtil.colorText("Non-Report File %d: " %(index),"lgreen"), (" " * spacingCount), pathToNonReportFile.replace(homeDirectory, "~")))
             index += 1;
 
     # Print the report archive location
     if ((os.path.exists(pathToCompressedReports)) or
         (os.path.exists(pathToExtractedReports))):
         wasInformationPrintedToConsole = True
-        print "\n%s" %(ConsoleUtil.colorText("Details of Report Extraction: ","lcyan"))
-        print "%s%s" %(ConsoleUtil.colorText("Compressed Reports Directory: ","lgreen"), pathToCompressedReports.replace(homeDirectory, "~"))
-        print "%s%s" %(ConsoleUtil.colorText("Extracted Reports Directory:  ","lgreen"), pathToExtractedReports.replace(homeDirectory, "~"))
+        print("\n%s" %(ConsoleUtil.colorText("Details of Report Extraction: ","lcyan")))
+        print("%s%s" %(ConsoleUtil.colorText("Compressed Reports Directory: ","lgreen"), pathToCompressedReports.replace(homeDirectory, "~")))
+        print("%s%s" %(ConsoleUtil.colorText("Extracted Reports Directory:  ","lgreen"), pathToExtractedReports.replace(homeDirectory, "~")))
 
         venv_insights = []
         for directory in os.listdir(pathToExtractedReports):
@@ -157,10 +157,10 @@ def printToConsole(pathToCompressedReports, pathToExtractedReports, mapOfPluginR
             venv_insights.append("cd %s; venv-insights-run.sh -p %s -J; venv-insights-run.sh -p %s -c | tee ./insights-cluster.txt; " %(pathToExtractedReports.replace(homeDirectory, "~"),
                                                                                                                                         pathToExtractedReports.replace(homeDirectory, "~"),
                                                                                                                                         pathToExtractedReports.replace(homeDirectory, "~")))
-            print "\n%s" %(ConsoleUtil.colorText("Commands for analyzing with insights-rules:","lcyan"))
+            print("\n%s" %(ConsoleUtil.colorText("Commands for analyzing with insights-rules:","lcyan")))
             for line in venv_insights:
-                print "%s" %(ConsoleUtil.colorText(line,"lgreen"))
-        print ""
+                print("%s" %(ConsoleUtil.colorText(line,"lgreen")))
+        print("")
     if (not wasInformationPrintedToConsole):
         message = "There was zero reports extracted and zero non-report files added."
         logging.getLogger(SXC_LOGGER_NAME).warning(message)
@@ -343,8 +343,8 @@ class OptionParserExtended(OptionParser):
         examplesMessage += "To run the cluster and the checksysreport plugin against a previously extracted report that used the modified layout scheme:\n"
         examplesMessage += "$ %s -p ~/sxarchive/ereports/15555553/2.17-01-26_160247 -e cluster,checksysreport -M\n\n" %(self.__commandName)
         OptionParser.print_help(self)
-        print layoutDescription
-        print examplesMessage
+        print(layoutDescription)
+        print(examplesMessage)
 
 class ExtendOption (Option):
         """
@@ -438,7 +438,7 @@ if __name__ == "__main__":
         if (cmdLineOpts.listModules):
             versionMessage = "%s %s\n" %(os.path.basename(sys.argv[0]), VERSION_NUMBER)
             versionMessage += "This program was written by Shane Bradley(sbradley@redhat.com): https://fedorahosted.org/sx \n"
-            print versionMessage
+            print(versionMessage)
             reportsHelper = ReportsHelper()
             reportsHelper.printReportsList(includeUserReports=(not cmdLineOpts.disableUserDefinedModules))
             pluginsHelper = PluginsHelper()
@@ -475,7 +475,7 @@ if __name__ == "__main__":
                     listOfFiles = plugin.getFileList()
                     if (len(listOfFiles) > 0) :
                         for filename in listOfFiles:
-                            if (not mapOfPluginReportPaths.has_key(plugin.getName())):
+                            if plugin.getName() not in mapOfPluginReportPaths:
                                 mapOfPluginReportPaths[plugin.getName()] = [filename]
                             else:
                                 mapOfPluginReportPaths[plugin.getName()].append(filename)
@@ -487,7 +487,7 @@ if __name__ == "__main__":
         message =  "This script will exit since control-c was executed by end user."
         logging.getLogger(SXC_LOGGER_NAME).error(message)
         sys.exit(2)
-    except Exception, e:
+    except Exception as e:
         import time
         import traceback
         errorString = ""
@@ -523,7 +523,7 @@ if __name__ == "__main__":
             logging.getLogger(SXC_LOGGER_NAME).error(message)
             message = "The data that was going to be written to the file is below: \n%s" %(errorString)
             logging.getLogger(SXC_LOGGER_NAME).info(message)
-        print errorString
+        print(errorString)
         sys.exit(2)
 
     # #######################################################################

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 
 @author    :  Shane Bradley
@@ -88,7 +88,7 @@ class VGS_V:
 
     def getAttribute(self, attributeName):
         attributesMap = self.getAttributesMap()
-        if (attributesMap.has_key("clustered")):
+        if "clustered" in attributesMap:
             return attributesMap.get("clustered")
         return ""
 

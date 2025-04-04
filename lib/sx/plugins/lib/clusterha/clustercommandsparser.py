@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This class contains object for data that is contains in the files
 sos_commands/cluster in a sosreport.
@@ -118,13 +118,13 @@ class ClustatCommand:
         return self.__serviceOwnerMap.keys()
 
     def getMemberID(self, memberName):
-        if (self.__memberIDMap.has_key(memberName)):
+        if memberName in self.__memberIDMap:
             return self.__memberIDMap.get(memberName)
         return ""
 
     def getMemberStatus(self, memberName):
         # Need a isOffline isOnline function
-        if (self.__memberStatusMap.has_key(memberName)):
+        if memberName in self.__memberStatusMap:
             return self.__memberStatusMap.get(memberName)
         return ""
 
@@ -140,18 +140,18 @@ class ClustatCommand:
 
     def getServiceOwner(self, serviceName):
         # Need to grep out last owner and no owner
-        if (self.__serviceOwnerMap.has_key(serviceName)):
+        if serviceName in self.__serviceOwnerMap:
             return self.__serviceOwnerMap.get(serviceName)
         return ""
 
     def getServiceLastOwner(self, serviceName):
         # Need to grep out owner and no owner
-        if (self.__serviceOwnerMap.has_key(serviceName)):
+        if serviceName in self.__serviceOwnerMap:
             return self.__serviceOwnerMap.get(serviceName)
         return ""
 
     def getServiceState(self, serviceName):
-        if (self.__serviceStateMap.has_key(serviceName)):
+        if serviceName in self.__serviceStateMap:
             return self.__serviceStateMap.get(serviceName)
         return ""
 

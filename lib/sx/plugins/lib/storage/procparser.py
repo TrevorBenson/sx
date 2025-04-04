@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This is a collection of classes that hold data for files that are
 located in the /proc directory.

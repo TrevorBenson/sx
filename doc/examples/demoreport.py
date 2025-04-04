@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This class is a container for a demoreport which does not exist and
 just an example.

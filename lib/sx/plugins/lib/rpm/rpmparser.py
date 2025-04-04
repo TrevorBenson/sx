@@ -1,5 +1,5 @@
 
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This is a collection of classes that contain data for files from a
 sosreport in the directory:
@@ -19,7 +19,7 @@ class RPMSParser:
             return parsedList
         # Compile the regex to start matching. I dont think I can ever
         # get this 100% accurate, but can get 99% accurate.
-        """
+        r"""
         regex = "(?P<name>.*[a-zA-Z])" + \
             "-(?P<majorVersion>\d)" + \
             ".(?P<minorVersion>\d)" + \
@@ -28,10 +28,10 @@ class RPMSParser:
             ".(?P<arch>noarch|i386|i586|i686|ia64|ppc|s390|s390x|x86_64)"
         """
         # In distroVersion leave empty one for rpms with no distroVersion
-        regex = "^(?P<name>[a-zA-Z_0-9+]*)-.*" + \
-            "-(?P<majorVersion>[0-9.]*).*" + \
-            ".(?P<distroVersion>fc[0-9]*|el4|el5|el6|el7|)" + \
-            ".(?P<arch>noarch|i386|i586|i686|ia64|ppc|s390|s390x|x86_64)"
+        regex = r"^(?P<name>[a-zA-Z_0-9+]*)-.*" + \
+            r"-(?P<majorVersion>[0-9.]*).*" + \
+            r".(?P<distroVersion>fc[0-9]*|el4|el5|el6|el7|)" + \
+            r".(?P<arch>noarch|i386|i586|i686|ia64|ppc|s390|s390x|x86_64)"
         rem = re.compile(r"%s" %(regex))
         for line in installedRPMSData:
             packageFullName = line.split()[0].lower().strip()
@@ -50,8 +50,8 @@ class RPMSParser:
                 parsedList.append(installedRPMS)
                 """
             else:
-                print packageFullName
-        print "\nAre the counts the same? \n\tinstalledRPMSData: %d\n\tparsedList:        %d" %(len(installedRPMSData), len(parsedList))
+                print(packageFullName)
+        print("\nAre the counts the same? \n\tinstalledRPMSData: %d\n\tparsedList:        %d" %(len(installedRPMSData), len(parsedList)))
         return parsedList
     parseInstalledRPMSData = staticmethod(parseInstalledRPMSData)
 
@@ -126,7 +126,7 @@ class RPMUtils:
             if (not len(combindedRegex) == 0):
                 combindedRegex += "|"
             # reencode the "-" to "__" so regex be happy
-            combindedRegex += "(?P<%s>%s-\d.*)" %(package.replace("-","__"), package)
+            combindedRegex += r"(?P<%s>%s-\d.*)" %(package.replace("-","__"), package)
 
         # Compile the regex to start matching
         rem = re.compile(r"%s" % combindedRegex)

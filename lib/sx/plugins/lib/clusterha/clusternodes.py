@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This file contains a container class for a collection of clusternode
 objects.
@@ -73,7 +73,7 @@ class ClusterNodes:
         # cman_tool_status file. All the keys have to be in file or it
         # will return None when parsed.
         cmanToolStatusCommand = None
-        if (clusterCommandsMap.has_key("cman_tool_status")):
+        if "cman_tool_status" in clusterCommandsMap:
             cmanToolStatusCommand = ClusterCommandsParser.parseCmanToolStatusData(clusterCommandsMap.get("cman_tool_status"))
             if (not cmanToolStatusCommand == None):
                 # For now we will just get the first address returned.
@@ -204,7 +204,7 @@ class ClusterNodes:
             if ((fs.getFSType().lower() == "gfs") or
                 (fs.getFSType().lower() == "gfs2")):
                 key = fs.getMountPoint()
-                if (not csFSMap.has_key(key)):
+                if key not in csFSMap:
                     csFSMap[key] = ClusterStorageFilesystem(fs.getDeviceName(),
                                                             fs.getMountPoint(),
                                                             fs.getFSType(),
@@ -216,7 +216,7 @@ class ClusterNodes:
             if ((fs.getFSType().lower() == "gfs") or
                 (fs.getFSType().lower() == "gfs2")):
                 key = fs.getMountPoint()
-                if (not csFSMap.has_key(key)):
+                if key not in csFSMap:
                     csFSMap[key] = ClusterStorageFilesystem(fs.getDeviceName(),
                                                             fs.getMountPoint(),
                                                             fs.getFSType(),
@@ -228,7 +228,7 @@ class ClusterNodes:
             cca = ClusterHAConfAnalyzer(pathToClusterConf)
             for fs in cca.getClusterFilesystemResourcesList():
                 key = fs.getMountPoint()
-                if (not csFSMap.has_key(key)):
+                if key not in csFSMap:
                     csFSMap[key] = ClusterStorageFilesystem(fs.getDeviceName(),
                                                             fs.getMountPoint(),
                                                             fs.getFSType(),
@@ -240,7 +240,7 @@ class ClusterNodes:
         for etcExport in etcExportsList:
             pathToDir = etcExport.getMountPoint()
             pathToFS = self.__findFSMatch(csFSMap.keys(), pathToDir)
-            if ((len(pathToFS) > 0) and (csFSMap.has_key(pathToFS))):
+            if len(pathToFS) > 0 and pathToFS in csFSMap:
                 fs = csFSMap.get(pathToFS)
                 # There can be only 1 fs export line. So we will use the first
                 # one we get.
@@ -249,7 +249,7 @@ class ClusterNodes:
         for smbSection in etcSambaSectionsList:
             pathToDir = smbSection.getOptionValue("path")
             pathToFS = self.__findFSMatch(csFSMap.keys(), pathToDir)
-            if ((len(pathToFS) > 0) and (csFSMap.has_key(pathToFS))):
+            if len(pathToFS) > 0 and pathToFS in csFSMap:
                 fs = csFSMap.get(pathToFS)
                 fs.addSMBSectionMount(smbSection)
 
@@ -260,7 +260,7 @@ class ClusterNodes:
                 pathToDir = smbSection.getOptionValue("path")
                 #print pathToDir
                 pathToFS = self.__findFSMatch(csFSMap.keys(), pathToDir)
-                if ((len(pathToFS) > 0) and (csFSMap.has_key(pathToFS))):
+                if len(pathToFS) > 0 and pathToFS in csFSMap:
                     fs = csFSMap.get(pathToFS)
                     fs.addClusteredSMBSection(key, smbSection)
         # Return all the ClusterStorageFilesystem objects
@@ -270,7 +270,7 @@ class ClusterNodes:
     # Public helper methods for functions
     # #######################################################################
     def getStorageData(self, clusternodeName):
-        if(self.__clusternodesStorageDataMap.has_key(clusternodeName)):
+        if clusternodeName in self.__clusternodesStorageDataMap:
             return self.__clusternodesStorageDataMap.get(clusternodeName)
         return None
 

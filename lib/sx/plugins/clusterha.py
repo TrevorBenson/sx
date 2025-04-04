@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This class will run various validation tests and gather information
 about Report Objects that are cluster nodes.
@@ -89,7 +89,7 @@ class Clusterha(sx.plugins.PluginBase):
                 cca = ClusterHAConfAnalyzer(pathToClusterConfFile)
                 clusterName = cca.getClusterName()
                 if (len(clusterName) > 0):
-                    if (not self.__clusterMap.has_key(clusterName)):
+                    if clusterName not in self.__clusterMap:
                         self.__clusterMap[clusterName] = ClusterNodes()
                     result = self.__clusterMap.get(clusterName).add(report)
 

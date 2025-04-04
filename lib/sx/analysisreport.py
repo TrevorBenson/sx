@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 Classes used to create a container for analysis and summary output of the
 plugins ran against the reports. The AR stands for Analysis Reports.

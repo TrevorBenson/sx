@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This is a plugin for rhnsatellite debug that will perform various
 validation tests.
@@ -104,7 +104,7 @@ class RHNSatelliteDebugReport:
         @param pathToRpmManifest: The path to the rpm manifest file.
         @type pathToRpmManifest: String
         """
-        print pathToRpmManifest
+        print(pathToRpmManifest)
         try:
             fin = open(pathToRpmManifest, "r")
             lines = fin.readlines()

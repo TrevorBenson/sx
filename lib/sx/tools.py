@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This class has a collection of various tools that are used with
 sosreports/sysreports.
@@ -69,7 +69,7 @@ class ConfigurationFileParser:
         # These are all the compiled regular expressions for no
         # quotes, single quotes, and double quotes of the value in the
         # pair.
-        res = re.compile("^(?P<key>\w+)=(?P<value>(\S+)?$|\'(\S+.*)\'.*|\"(\S+.*)\".*)")
+        res = re.compile(r"^(?P<key>\w+)=(?P<value>(\S+)?$|\'(\S+.*)\'.*|\"(\S+.*)\".*)")
         remComments = re.compile("^#")
 
         for line in self.__configurationFileData:
@@ -123,7 +123,7 @@ class ConfigurationFileParser:
         @param optionName: An option in the configuration file.
         @type optionName: String
         """
-        if ((self.__configOptionsMap.has_key(optionName)) and (self.isValid())):
+        if optionName in self.__configOptionsMap and self.isValid():
             return self.__configOptionsMap[optionName]
         return ""
 
@@ -196,8 +196,8 @@ class ConsoleUtil:
                     "purple":"35", "cyan":"36", "lgray":"37", "gray":"1;30", "lred":"1;31",
                     "lgreen":"1;32", "yellow":"1;33", "lblue":"1;34", "pink":"1;35",
                     "lcyan":"1;36", "white":"1;37" }
-        if (not colors.has_key(color)) :
-            return  text
+        if color not in colors:
+            return text
         opencol = "\033["
         closecol = "m"
         clear = opencol + "0" + closecol

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This contains Global variables for sx.
 
@@ -279,7 +279,10 @@ class SXConfigurationFiles:
     """
     REPORT_USER_IMPORT="sxreports"
     PLUGIN_USER_IMPORT="sxplugins"
-    CONFIGURATION_DIR = os.path.join(os.environ['HOME'],".sx")
+    CONFIGURATION_DIR = os.environ.get(
+        "SX_CONFIGURATION_DIR",
+        os.path.join(os.environ['HOME'],".sx")
+    )
 
     def generateDefaultConfigurationDirectories(self):
         """
@@ -312,7 +315,7 @@ class SXConfigurationFiles:
                      os.path.join(os.path.join(SXConfigurationFiles.CONFIGURATION_DIR, SXConfigurationFiles.PLUGIN_USER_IMPORT), "__init__.py")) :
             if (not os.access(path, os.F_OK)) :
                 try:
-                    fout = open(path, "wb")
+                    fout = open(path, "w")
                     fout.write("# created by sxconsole: %s\n" %(timestamp))
                     fout.close()
                 except IOError:

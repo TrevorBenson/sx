@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 
 @author    :  Shane Bradley
@@ -42,12 +42,11 @@ class GlusterPeerNodes:
         # does not validate to be true then the node will not
         # be added.
         # ###############################################################
-        if (distroRelease == None) :
+        if not distroRelease:
             message = "The distribution release file was either not valid or unknown type."
             logging.getLogger(sx.MAIN_LOGGER_NAME).error(message)
             return False
-        elif (not ((distroRelease.getDistroName() == "RHEL") and
-                   ((distroRelease.getMajorVersion() == 6)))):
+        elif distroRelease.getDistroName() != "RHEL" and distroRelease.getMajorVersion() == 6:
             message = "This distribution release is not supported: %s." %(distroRelease)
             logging.getLogger(sx.MAIN_LOGGER_NAME).error(message)
             return False

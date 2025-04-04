@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This is port of the perl script that dwysocha wrote:
 http://seg.rdu.redhat.com/~dwysocha/seg-tools/seg-dmsetup-ls-tree
@@ -244,9 +244,9 @@ class BlockDeviceTree:
             if (not (deviceMapperMajorNumber == procPartition.getMajorNumber())):
                 # If there is a mount point for this device name then
                 # set the mount point.
-                if (relativeFilesysMountMap.has_key(blockDevice.getDeviceName())):
+                if blockDevice.getDeviceName() in relativeFilesysMountMap:
                     blockDevice.setMountPoint(relativeFilesysMountMap[blockDevice.getDeviceName()].getMountPoint())
-            elif (self.getDMSetupInfoMap().has_key(key)):
+            elif key in self.getDMSetupInfoMap():
                 # If this is a devicemapper block device then create a
                 # DeviceMapperBlockDevice instead.
 
@@ -263,7 +263,7 @@ class BlockDeviceTree:
 
                 # If there is a mount point for this devicemapper name
                 # then set the mount point.
-                if (relativeFilesysMountMap.has_key(deviceMapperName)):
+                if deviceMapperName in relativeFilesysMountMap:
                     blockDevice.setMountPoint(relativeFilesysMountMap[deviceMapperName].getMountPoint())
             # Add the blockDevice to the map
             blockDeviceMap[key] = blockDevice
@@ -271,11 +271,11 @@ class BlockDeviceTree:
         # Now build the dependencies tree
         for key in blockDeviceMap.keys():
             currentBlockDevice = blockDeviceMap[key]
-            if ((deviceMapperMajorNumber == currentBlockDevice.getMajorNumber()) and
-                (self.getDMSetupInfoMap().has_key(key))):
+            if (deviceMapperMajorNumber == currentBlockDevice.getMajorNumber() and
+                key in self.getDMSetupInfoMap()):
                 mmDepsPairs = currentBlockDevice.getMajorMinorPairDependenciesList()
                 for mmPair in mmDepsPairs:
-                    if (blockDeviceMap.has_key(mmPair)):
+                    if mmPair in blockDeviceMap:
                         currentBlockDevice.addBlockDeviceDependency(blockDeviceMap[mmPair])
         return blockDeviceMap
 

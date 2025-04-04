@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This class is a container for different kind of reports. This is the
 base class that all report types should inherit.
@@ -37,11 +37,11 @@ class ReportsHelper:
         if (not len(loadedReport) > 0):
             logging.getLogger(sx.MAIN_LOGGER_NAME).error("There were no reports found.")
         else:
-            print "List of installed report types:"
+            print("List of installed report types:")
             for report in loadedReport:
-                print "%s(%s):  %s" %(ConsoleUtil.colorText(report.getName(),"lblue"),
+                print("%s(%s):  %s" %(ConsoleUtil.colorText(report.getName(),"lblue"),
                                       report.TYPE_DETECTION_FILE,
-                                      report.getDescription())
+                                      report.getDescription()))
 
 
 class Report:

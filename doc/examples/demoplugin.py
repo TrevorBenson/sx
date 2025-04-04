@@ -1,10 +1,10 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This is a demo plugin to demostrate how to add plugins in. This plugin
 uses sysreport/sosreports.
 
 The plugin can be placed in the directory: $HOME/.sx/sxplugins/
-$ cp demo.py $HOME/.sx/sxplugins/
+$ cp demoplugin.py $HOME/.sx/sxplugins/
 
 It will need to be enabled.
 
@@ -144,9 +144,9 @@ class Demoplugin(sx.plugins.PluginBase):
         # #######################################################################
         # Write information gathered to console
         # #######################################################################
-        print "\t  This is the uptime information generated:"
+        print("\t  This is the uptime information generated:")
         for key in self.__uptime.keys() :
-            print "\t  %s: %s" %(key, self.__uptime[key])
+            print("\t  %s: %s" %(key, self.__uptime[key]))
 
         # #######################################################################
         # Write information gathered to a report file.

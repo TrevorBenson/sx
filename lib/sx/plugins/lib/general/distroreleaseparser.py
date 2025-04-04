@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This is a collection of classes that contain data for files from a
 sosreport in the directory:
@@ -30,33 +30,33 @@ class DistroReleaseParser:
         /etc/redhat-release file.
         type etcRedHatReleaseData: Array
         """
-        if (etcRedHatReleaseData == None):
+        if not etcRedHatReleaseData:
             return None
-        elif (not len(etcRedHatReleaseData) > 0):
+        if len(etcRedHatReleaseData) <= 0:
             return None
-        else:
-            regex = "^(?P<distroName>Red Hat Enterprise Linux|Fedora) " + \
-                "(?P<distroType>AS|ES|WS|Server|\s)?\ ?" + \
-                "release (?P<distroMajorVersion>\d{1,2})[\. ]?" + \
-                "(?P<distroMinorVersion1>\d{1,})?\s*" + \
-                "(?P<isbeta>Beta)?\s*" + \
-                "\(\D*(?P<distroMinorVersion2>\d{1,})?\)"
-            rem = re.compile(regex)
-            mo = rem.match(etcRedHatReleaseData[0].strip())
-            if mo:
-                distroName = mo.group("distroName")
-                distroType =  mo.group("distroType")
-                distroMajorVersion = mo.group("distroMajorVersion")
-                if (distroMajorVersion == None):
-                    distroMajorVersion = 0
-                distroMinorVersion =  mo.group("distroMinorVersion1")
-                if (distroMinorVersion == None):
-                    if (mo.group("distroMinorVersion2") == None):
-                        distroMinorVersion = 0
-                    else:
-                        distroMinorVersion = mo.group("distroMinorVersion2")
-                return DistroRelease(distroName, distroType, distroMajorVersion, distroMinorVersion)
-            return None
+        regex = r"^(?P<distroName>Red Hat Enterprise Linux|Fedora) " + \
+            r"(?P<distroType>AS|ES|WS|Server|\s)?\ ?" + \
+            r"release (?P<distroMajorVersion>\d{1,2})[\. ]?" + \
+            r"(?P<distroMinorVersion1>\d{1,})?\s*" + \
+            r"(?P<isbeta>Beta)?\s*" + \
+            r"\(\D*(?P<distroMinorVersion2>\d{1,})?\)"
+        rem = re.compile(regex)
+        mo = rem.match(etcRedHatReleaseData[0].strip())
+        if mo:
+            distroName = mo.group("distroName")
+            distroType =  mo.group("distroType")
+            distroMajorVersion = mo.group("distroMajorVersion")
+            if (distroMajorVersion == None):
+                distroMajorVersion = 0
+            distroMinorVersion =  mo.group("distroMinorVersion1")
+            if (distroMinorVersion == None):
+                if (mo.group("distroMinorVersion2") == None):
+                    distroMinorVersion = 0
+                else:
+                    distroMinorVersion = mo.group("distroMinorVersion2")
+            return DistroRelease(distroName, distroType, distroMajorVersion, distroMinorVersion)
+        return None
+
     parseEtcRedHatReleaseRedhatReleaseData = staticmethod(parseEtcRedHatReleaseRedhatReleaseData)
 
     def findReleaseFromRPM(installedRPMSData):

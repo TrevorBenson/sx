@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 This class is a container for rhnsatellite-debug report object.
 
@@ -57,7 +57,7 @@ class Satellitedebug(Report) :
         data = extractor.list()
         pathToFile = ""
         if (len(data) > 0) :
-            regex = "(.*%s.*)" %(Satellitedebug.TYPE_DETECTION_FILE)
+            regex = r"(.*%s.*)" %(Satellitedebug.TYPE_DETECTION_FILE)
             rem = re.compile(regex)
             for line in data:
                 mo = rem.match(line)
@@ -73,7 +73,7 @@ class Satellitedebug(Report) :
         if (len(pathToFile) > 0) :
             fileContents = extractor.getDataFromFile(pathToFile)
             if (len(fileContents) > 0):
-                regex = ".*%s.*%s(.*)" %("Issuer", "CN=")
+                regex = r".*%s.*%s(.*)" %("Issuer", "CN=")
                 rem = re.compile(regex)
                 for line in fileContents:
                     mo = rem.match(line)
